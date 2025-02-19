@@ -17,7 +17,7 @@
 }
 
         :root {
-            --primary-color: #4f46e5;
+            --primary-color:green;
             --sidebar-width: 280px;
             --sidebar-collapsed-width: 80px;
             --header-height: 64px;
@@ -384,78 +384,92 @@
     <div class="layout">
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">Logo</div>
-            </div>
-            <nav class="nav-items">
-                <div class="nav-item">
-                    <a href="#" class="nav-link active">
-                        <i class="fas fa-home nav-icon"></i>
-                        <span class="nav-text">Dashboard</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-plane nav-icon"></i>
-                        <span class="nav-text">Flights</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-hotel nav-icon"></i>
-                        <span class="nav-text">Hotels</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-car nav-icon"></i>
-                        <span class="nav-text">Car Rentals</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-map-marked-alt nav-icon"></i>
-                        <span class="nav-text">Tours</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-calendar-alt nav-icon"></i>
-                        <span class="nav-text">Bookings</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-users nav-icon"></i>
-                        <span class="nav-text">Customers</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-cog nav-icon"></i>
-                        <span class="nav-text">Settings</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a  href="{{ route('logout') }}" class="nav-link"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="fas fa-sign-out-alt nav-icon"></i>
-                        <span class="nav-text">Logout</span>
-                    </a>
+    <div class="sidebar-header">
+        <div class="logo"></div>
+    </div>
+    <nav class="nav-items">
+        <!-- Dashboard -->
+        <div class="nav-item">
+            <a href="{{ route('dashboard') }}" class="nav-link active">
+                <i class="fas fa-home nav-icon"></i>
+                <span class="nav-text">Dashboard</span>
+            </a>
+        </div>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-                </div>
-            </nav>
-        </aside>
+        <!-- Experiences -->
+        <div class="nav-item">
+            <a href="{{ route('experiences.index') }}" class="nav-link">
+                <i class="fas fa-map-marked-alt nav-icon"></i>
+                <span class="nav-text">Experiences</span>
+            </a>
+        </div>
 
+        <!-- Upcoming Trips -->
+        <div class="nav-item">
+            <a href="{{ route('trips.index') }}" class="nav-link">
+                <i class="fas fa-calendar-alt nav-icon"></i>
+                <span class="nav-text">Upcoming Trips</span>
+            </a>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="nav-item">
+            <a href="{{ route('testimonials.index') }}" class="nav-link">
+                <i class="fas fa-comments nav-icon"></i>
+                <span class="nav-text">Testimonials</span>
+            </a>
+        </div>
+
+        <!-- Contact Messages -->
+        <div class="nav-item">
+            <a href="{{ route('contact-messages.index') }}" class="nav-link">
+                <i class="fas fa-envelope nav-icon"></i>
+                <span class="nav-text">Contact Messages</span>
+            </a>
+        </div>
+
+        <!-- About Us -->
+        <div class="nav-item">
+            <a href="{{ route('about-us.edit') }}" class="nav-link">
+                <i class="fas fa-info-circle nav-icon"></i>
+                <span class="nav-text">About Us</span>
+            </a>
+        </div>
+
+        <!-- Social Media Links -->
+        <div class="nav-item">
+            <a href="{{ route('social-media.index') }}" class="nav-link">
+                <i class="fas fa-share-alt nav-icon"></i>
+                <span class="nav-text">Social Media</span>
+            </a>
+        </div>
+
+        <!-- Settings -->
+        <div class="nav-item">
+            <a href="{{ route('settings.edit') }}" class="nav-link">
+                <i class="fas fa-cog nav-icon"></i>
+                <span class="nav-text">Settings</span>
+            </a>
+        </div>
+
+        <!-- Logout -->
+        <div class="nav-item">
+            <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-text">Logout</span>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+    </nav>
+</aside>
         <!-- Header -->
         <header class="header">
             <div class="header-left">
                 <button class="toggle-btn" onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1 class="text-xl font-semibold">Dashboard</h1>
             </div>
             <div class="header-right">
                 <button class="notification-btn">

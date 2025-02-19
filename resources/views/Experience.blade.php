@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.js" defer></script>
     <style>
         :root {
-            --primary-color: #EF4444; /* Coral accent */
+            --primary-color: green; /* Coral accent */
             --secondary-color: #3B82F6; /* Blue accent */
             --text-color: #1F2937; /* Dark gray */
             --light-gray: #F3F4F6; /* Light gray */
@@ -42,7 +42,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, rgba(239, 68, 68, 0.6), rgba(59, 130, 246, 0.6));
+            background: linear-gradient(45deg, rgba(5, 150, 105, 0.6), rgba(37, 99, 235, 0.6));
             z-index: 1;
         }
 
@@ -170,18 +170,109 @@
             gap: 0.3rem;
         }
 
+        /* Upcoming Trips Section */
+        .upcoming-trips {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .upcoming-trips h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+
+        .upcoming-trips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .trip-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 1rem;
+        }
+        .trip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Trip Card Styles */
+        .trip-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .trip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        .trip-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .trip-card:hover img {
+            transform: scale(1.1);
+        }
+        .trip-content {
+            padding: 1.5rem;
+        }
+        .trip-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .trip-description {
+            color: #6B7280;
+            margin-bottom: 1rem;
+        }
+        .trip-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .trip-date {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color:green;
+        }
+        .trip-action {
+            background-color:green;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .trip-action:hover {
+            background-color: #DC2626;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-title {
                 font-size: 2.5rem;
             }
 
-            .experience-grid {
+            .experience-grid,
+            .upcoming-trips-grid {
                 grid-template-columns: 1fr;
                 padding: 0 1rem;
             }
 
-            .experience-title {
+            .experience-title,
+            .trip-title {
                 font-size: 1.5rem;
             }
         }
@@ -199,89 +290,80 @@
 
     <section>
         <div class="experience-grid">
-            <!-- Experience 1 -->
-            <article class="experience-card">
-                <span class="experience-category">Adventure</span>
-                <img src="/images/adventure.jpg" alt="Adventure Experience">
-                <div class="experience-content">
-                    <h3 class="experience-title">Thrilling Mountain Expeditions</h3>
-                    <p class="experience-description">Embark on an unforgettable journey through rugged terrains and breathtaking landscapes. Perfect for adventure seekers.</p>
-                    <div class="experience-footer">
-                        <a href="#" class="explore-more">
-                            Explore
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </a>
-                        <div class="experience-meta">
-                            <span class="meta-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                                7 days
-                            </span>
-                        </div>
-                    </div>
+            <!-- Retreats -->
+            @foreach($experiences as $experience)
+    <article class="experience-card">
+        <span class="experience-category">{{ $experience->category }}</span>
+        <img src="{{ asset('storage/' . $experience->image) }}" alt="{{ $experience->category }}">
+        <div class="experience-content">
+            <h3 class="experience-title">{{ $experience->title }}</h3>
+            <p class="experience-description">{{ $experience->description }}</p>
+            <div class="experience-footer">
+                <a href="{{ route('experience.show', $experience->id) }}" class="explore-more">
+                    Discover More
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+                <div class="experience-meta">
+                    <span class="meta-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        {{ \Carbon\Carbon::parse($experience->date)->format('F Y') }}
+                    </span>
                 </div>
-            </article>
+            </div>
+        </div>
+    </article>
+@endforeach
 
-            <!-- Experience 2 -->
-            <article class="experience-card">
-                <span class="experience-category">Cultural</span>
-                <img src="/images/cultural.jpg" alt="Cultural Experience">
-                <div class="experience-content">
-                    <h3 class="experience-title">Cultural Immersion in Asia</h3>
-                    <p class="experience-description">Experience the rich traditions, cuisines, and history of Asia. A journey that will leave you inspired.</p>
-                    <div class="experience-footer">
-                        <a href="#" class="explore-more">
-                            Explore
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </a>
-                        <div class="experience-meta">
-                            <span class="meta-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                                10 days
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </article>
 
-            <!-- Experience 3 -->
-            <article class="experience-card">
-                <span class="experience-category">Relaxation</span>
-                <img src="/images/relaxation.jpg" alt="Relaxation Experience">
-                <div class="experience-content">
-                    <h3 class="experience-title">Tropical Beach Getaway</h3>
-                    <p class="experience-description">Unwind on pristine beaches with crystal-clear waters. The perfect escape for relaxation and rejuvenation.</p>
-                    <div class="experience-footer">
-                        <a href="#" class="explore-more">
-                            Explore
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </a>
-                        <div class="experience-meta">
-                            <span class="meta-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                                5 days
-                            </span>
-                        </div>
+
+
+            <!-- Nightlife Experiences -->
+
+        </div>
+    </section>
+
+    <!-- Upcoming Trips Section -->
+    <section class="upcoming-trips">
+        <h2>Upcoming Trips</h2>
+        <div class="upcoming-trips-grid">
+            <!-- Trip 1 -->
+
+            <!-- Trip 2 -->
+            @foreach ($trips as $trip)
+            <div class="trip-card">
+                <img src="{{ asset('storage/' . $trip->image) }}" alt="{{ $trip->title }}">
+                <div class="trip-content">
+                    <h3 class="trip-title">{{ $trip->title }}</h3>
+                    <p class="trip-description">{{ $trip->description }}</p>
+                    <div class="trip-footer">
+                        <span class="trip-date">{{ \Carbon\Carbon::parse($trip->start_date)->format('F d') }} - {{ \Carbon\Carbon::parse($trip->end_date)->format('d, Y') }}</span>
+                        <a href="#" class="trip-action">Book Now</a>
                     </div>
                 </div>
-            </article>
+            </div>
+        @endforeach
+
+            <!-- Trip 3 -->
+
+
+            <!-- Trip 4 -->
+
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="#" class="explore-more">
+                View All Upcoming Experiences
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
         </div>
     </section>
 

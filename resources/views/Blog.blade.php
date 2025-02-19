@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.js" defer></script>
     <style>
         :root {
-            --primary-color: #EF4444;
+            --primary-color:green;
             --secondary-color: #3B82F6;
             --text-color: #1F2937;
             --light-gray: #F3F4F6;
@@ -41,7 +41,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, rgba(239, 68, 68, 0.6), rgba(59, 130, 246, 0.6));
+            background: linear-gradient(45deg, rgba(5, 150, 105, 0.6), rgba(37, 99, 235, 0.6));
             z-index: 1;
         }
 
@@ -188,7 +188,7 @@
 
     <header class="blog-header">
         <div class="header-content">
-            <h1 class="header-title">GlobalStitch Blog</h1>
+            <h1 class="header-title">GlobeStitch Blog</h1>
             <p class="header-subtitle">Discover amazing destinations, travel tips, and unforgettable experiences from around the world.</p>
         </div>
     </header>

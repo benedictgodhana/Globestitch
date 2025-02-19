@@ -7,10 +7,11 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #EF4444; /* Coral accent */
-            --secondary-color: #3B82F6; /* Blue accent */
+            --primary-color: #059669; /* Green accent */
+            --secondary-color: #2563EB; /* Blue accent */
             --text-color: #1F2937; /* Dark gray */
             --light-gray: #F3F4F6; /* Light gray */
             --transition: all 0.3s ease;
@@ -30,7 +31,7 @@
             position: relative;
             text-align: center;
             padding: 8rem 1rem;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/contact-header.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/woman-laughing-while-talking-phone.jpg') center/cover no-repeat;
             color: white;
             overflow: hidden;
         }
@@ -42,7 +43,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, rgba(239, 68, 68, 0.6), rgba(59, 130, 246, 0.6));
+            background: linear-gradient(45deg, rgba(5, 150, 105, 0.6), rgba(37, 99, 235, 0.6));
             z-index: 1;
         }
 
@@ -56,6 +57,7 @@
             font-weight: 600;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in-out;
         }
 
         .header-subtitle {
@@ -63,6 +65,7 @@
             max-width: 600px;
             margin: 0 auto;
             opacity: 0.9;
+            animation: slideUp 1s ease-in-out;
         }
 
         /* Contact Section */
@@ -78,16 +81,19 @@
         .contact-info, .contact-form {
             flex: 1;
             min-width: 300px;
-        }
-
-        .contact-info {
             background: white;
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
         }
 
-        .contact-info h2 {
+        .contact-info:hover, .contact-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-info h2, .contact-form h2 {
             font-size: 2rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
@@ -100,21 +106,29 @@
             font-size: 1.1rem;
         }
 
-        .contact-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
         .contact-item {
             display: flex;
             align-items: center;
             gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .contact-item i {
             font-size: 1.5rem;
             color: var(--primary-color);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(5, 150, 105, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover i {
+            background: var(--primary-color);
+            color: white;
         }
 
         .contact-item span {
@@ -122,38 +136,40 @@
             color: var(--text-color);
         }
 
-        .contact-form {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .contact-form h2 {
-            font-size: 2rem;
-            font-weight: 600;
+        /* Form Group Styling */
+        .form-group {
+            position: relative;
             margin-bottom: 1.5rem;
-            color: var(--text-color);
         }
 
-        .contact-form input, .contact-form textarea {
+        .form-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+
+        .form-group input, .form-group textarea {
             width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1.5rem;
+            padding: 0.75rem 0.75rem 0.75rem 2.5rem; /* Add padding for the icon */
             border: 1px solid var(--light-gray);
             border-radius: 10px;
             font-size: 1rem;
             transition: var(--transition);
         }
 
-        .contact-form input:focus, .contact-form textarea:focus {
-            border-color: var(--primary-color);
-            outline: none;
+        .form-group textarea {
+            padding-left: 2.5rem;
+            min-height: 150px;
         }
 
-        .contact-form textarea {
-            resize: vertical;
-            min-height: 150px;
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
         }
 
         .contact-form button {
@@ -173,6 +189,17 @@
             transform: translateY(-2px);
         }
 
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-title {
@@ -182,6 +209,10 @@
             .contact-section {
                 flex-direction: column;
                 padding: 0 1rem;
+            }
+
+            .contact-info, .contact-form {
+                padding: 1.5rem;
             }
         }
     </style>
@@ -197,34 +228,46 @@
     </header>
 
     <section class="contact-section">
-        <!-- Contact Information -->
         <div class="contact-info">
             <h2>Get in Touch</h2>
-            <p>Have questions or need assistance? We're just a message away. Feel free to reach out to us via phone, email, or visit our office.</p>
-            <div class="contact-details">
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>123 Travel Lane, Adventure City, USA</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone-alt"></i>
-                    <span>+1 123-456-7890</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>info@globestitch.com</span>
-                </div>
+            <p>Have questions or need assistance? We're just a message away.</p>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Westlands, Kenya</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>(+254) 7XX-XXX-XXX</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>info@globestitch.com</span>
             </div>
         </div>
 
-        <!-- Contact Form -->
         <div class="contact-form">
             <h2>Send Us a Message</h2>
-            <form action="#" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required />
-                <input type="email" name="email" placeholder="Your Email" required />
-                <input type="text" name="subject" placeholder="Subject" required />
-                <textarea name="message" placeholder="Your Message" required></textarea>
+            <form>
+                <!-- Name Field -->
+                <div class="form-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Your Name" required />
+                </div>
+                <!-- Email Field -->
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Your Email" required />
+                </div>
+                <!-- Subject Field -->
+                <div class="form-group">
+                    <i class="fas fa-tag"></i>
+                    <input type="text" placeholder="Subject" required />
+                </div>
+                <!-- Message Field -->
+                <div class="form-group">
+                    <i class="fas fa-comment"></i>
+                    <textarea placeholder="Your Message" required></textarea>
+                </div>
                 <button type="submit">Send Message</button>
             </form>
         </div>

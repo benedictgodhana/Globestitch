@@ -45,7 +45,7 @@
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
-            color: #ff6b6b; /* Coral accent color */
+            color:green; /* Coral accent color */
             position: relative;
         }
 
@@ -56,7 +56,7 @@
             bottom: -10px;
             width: 50px;
             height: 3px;
-            background-color: #ff6b6b; /* Coral accent color */
+            background-color:green; /* Coral accent color */
         }
 
         .footer-section p {
@@ -155,7 +155,7 @@
             <div class="footer-section">
                 <h3>About Us</h3>
                 <p>
-                    At TravelStitch, we craft unforgettable travel experiences tailored just for you.
+                    At GlobeStitch, we craft unforgettable travel experiences tailored just for you.
                     Explore the world with confidence and style.
                 </p>
                 <p>
@@ -186,7 +186,7 @@
             <!-- Contact Us -->
             <div class="footer-section">
                 <h3>Contact Us</h3>
-                <p><strong>Email:</strong> info@travelstitch.com</p>
+                <p><strong>Email:</strong> info@GlobeStitch.com</p>
                 <p><strong>Phone:</strong> +1 123-456-7890</p>
                 <p><strong>Address:</strong> 123 Travel Lane, Adventure City, USA</p>
                 <p><strong>Support Hours:</strong> Mon - Fri, 9 AM - 6 PM</p>
@@ -209,7 +209,7 @@
 
         <!-- Copyright -->
         <div class="copyright">
-            &copy; 2023 TravelStitch. All rights reserved.
+            &copy; 2023 GlobeStitch. All rights reserved.
         </div>
     </footer>
 </body>

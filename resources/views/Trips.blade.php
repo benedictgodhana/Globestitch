@@ -35,10 +35,10 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: -1;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(5, 150, 105, 0.6), rgba(37, 99, 235, 0.6));
+            z-index: 1;
         }
         .hero-content {
             max-width: 800px;
@@ -55,7 +55,7 @@
             margin-bottom: 2rem;
         }
         .cta-button {
-            background-color: #EF4444;
+            background-color:green;
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
@@ -123,10 +123,10 @@
         .trip-date {
             font-size: 1.1rem;
             font-weight: bold;
-            color: #EF4444;
+            color:green;
         }
         .trip-action {
-            background-color: #EF4444;
+            background-color:green;
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 5px;
@@ -167,48 +167,24 @@
 
     <!-- Main Content -->
     <section class="trip-container" id="trips">
-        <h2 style="text-align: center; margin-bottom: 2rem;">Upcoming Trips</h2>
-        <div class="trip-grid">
-            <!-- Trip Card 1 -->
+    <h2 style="text-align: center; margin-bottom: 2rem;">Upcoming Trips</h2>
+    <div class="trip-grid">
+        @foreach ($trips as $trip)
             <div class="trip-card">
-                <img src="/images/bali-trip.jpg" alt="Bali Adventure">
+                <img src="{{ asset('storage/' . $trip->image) }}" alt="{{ $trip->title }}">
                 <div class="trip-content">
-                    <h3 class="trip-title">Bali Adventure</h3>
-                    <p class="trip-description">Discover the tropical paradise of Bali with guided tours and cultural experiences.</p>
+                    <h3 class="trip-title">{{ $trip->title }}</h3>
+                    <p class="trip-description">{{ $trip->description }}</p>
                     <div class="trip-footer">
-                        <span class="trip-date">April 15-22, 2025</span>
+                        <span class="trip-date">{{ \Carbon\Carbon::parse($trip->start_date)->format('F d') }} - {{ \Carbon\Carbon::parse($trip->end_date)->format('d, Y') }}</span>
                         <a href="#" class="trip-action">Book Now</a>
                     </div>
                 </div>
             </div>
+        @endforeach
+    </div>
+</section>
 
-            <!-- Trip Card 2 -->
-            <div class="trip-card">
-                <img src="/images/alps-trip.jpg" alt="Swiss Alps Escape">
-                <div class="trip-content">
-                    <h3 class="trip-title">Swiss Alps Escape</h3>
-                    <p class="trip-description">Enjoy breathtaking mountain views and thrilling outdoor activities.</p>
-                    <div class="trip-footer">
-                        <span class="trip-date">May 10-17, 2025</span>
-                        <a href="#" class="trip-action">Book Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Trip Card 3 -->
-            <div class="trip-card">
-                <img src="/images/africa-safari.jpg" alt="African Safari">
-                <div class="trip-content">
-                    <h3 class="trip-title">African Safari</h3>
-                    <p class="trip-description">Experience the wonders of African wildlife and scenic landscapes.</p>
-                    <div class="trip-footer">
-                        <span class="trip-date">June 5-12, 2025</span>
-                        <a href="#" class="trip-action">Book Now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     @include('layouts.footer')
