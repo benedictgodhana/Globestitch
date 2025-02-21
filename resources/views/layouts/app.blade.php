@@ -377,6 +377,12 @@
             font-size: 0.875rem;
             color: var(--secondary-color);
         }
+        .nav-link.active {
+    background-color: #007bff; /* Your highlight color */
+    color: white;
+    font-weight: bold;
+}
+
 
     </style>
 </head>
@@ -388,81 +394,82 @@
         <div class="logo"></div>
     </div>
     <nav class="nav-items">
-        <!-- Dashboard -->
-        <div class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link active">
-                <i class="fas fa-home nav-icon"></i>
-                <span class="nav-text">Dashboard</span>
-            </a>
-        </div>
+    <!-- Dashboard -->
+    <div class="nav-item">
+        <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-text">Dashboard</span>
+        </a>
+    </div>
 
-        <!-- Experiences -->
-        <div class="nav-item">
-            <a href="{{ route('experiences.index') }}" class="nav-link">
-                <i class="fas fa-map-marked-alt nav-icon"></i>
-                <span class="nav-text">Experiences</span>
-            </a>
-        </div>
+    <!-- Experiences -->
+    <div class="nav-item">
+        <a href="{{ route('experiences.index') }}" class="nav-link {{ request()->routeIs('experiences.index') ? 'active' : '' }}">
+            <i class="fas fa-map-marked-alt nav-icon"></i>
+            <span class="nav-text">Experiences</span>
+        </a>
+    </div>
 
-        <!-- Upcoming Trips -->
-        <div class="nav-item">
-            <a href="{{ route('trips.index') }}" class="nav-link">
-                <i class="fas fa-calendar-alt nav-icon"></i>
-                <span class="nav-text">Upcoming Trips</span>
-            </a>
-        </div>
+    <!-- Upcoming Trips -->
+    <div class="nav-item">
+        <a href="{{ route('trips.index') }}" class="nav-link {{ request()->routeIs('trips.index') ? 'active' : '' }}">
+            <i class="fas fa-calendar-alt nav-icon"></i>
+            <span class="nav-text">Upcoming Trips</span>
+        </a>
+    </div>
 
-        <!-- Testimonials -->
-        <div class="nav-item">
-            <a href="{{ route('testimonials.index') }}" class="nav-link">
-                <i class="fas fa-comments nav-icon"></i>
-                <span class="nav-text">Testimonials</span>
-            </a>
-        </div>
+    <!-- Testimonials -->
+    <div class="nav-item">
+        <a href="{{ route('testimonials.index') }}" class="nav-link {{ request()->routeIs('testimonials.index') ? 'active' : '' }}">
+            <i class="fas fa-comments nav-icon"></i>
+            <span class="nav-text">Testimonials</span>
+        </a>
+    </div>
 
-        <!-- Contact Messages -->
-        <div class="nav-item">
-            <a href="{{ route('contact-messages.index') }}" class="nav-link">
-                <i class="fas fa-envelope nav-icon"></i>
-                <span class="nav-text">Contact Messages</span>
-            </a>
-        </div>
+    <!-- Contact Messages -->
+    <div class="nav-item">
+        <a href="{{ route('contact-messages.index') }}" class="nav-link {{ request()->routeIs('contact-messages.index') ? 'active' : '' }}">
+            <i class="fas fa-envelope nav-icon"></i>
+            <span class="nav-text">Contact Messages</span>
+        </a>
+    </div>
 
-        <!-- About Us -->
-        <div class="nav-item">
-            <a href="{{ route('about-us.edit') }}" class="nav-link">
-                <i class="fas fa-info-circle nav-icon"></i>
-                <span class="nav-text">About Us</span>
-            </a>
-        </div>
+    <!-- About Us -->
+    <div class="nav-item">
+        <a href="#" class="nav-link {{ request()->routeIs('about-us.edit') ? 'active' : '' }}">
+            <i class="fas fa-info-circle nav-icon"></i>
+            <span class="nav-text">About Us</span>
+        </a>
+    </div>
 
-        <!-- Social Media Links -->
-        <div class="nav-item">
-            <a href="{{ route('social-media.index') }}" class="nav-link">
-                <i class="fas fa-share-alt nav-icon"></i>
-                <span class="nav-text">Social Media</span>
-            </a>
-        </div>
+    <!-- Social Media Links -->
+    <div class="nav-item">
+        <a href="{{ route('social-media.index') }}" class="nav-link {{ request()->routeIs('social-media.index') ? 'active' : '' }}">
+            <i class="fas fa-share-alt nav-icon"></i>
+            <span class="nav-text">Social Media</span>
+        </a>
+    </div>
 
-        <!-- Settings -->
-        <div class="nav-item">
-            <a href="{{ route('settings.edit') }}" class="nav-link">
-                <i class="fas fa-cog nav-icon"></i>
-                <span class="nav-text">Settings</span>
-            </a>
-        </div>
+    <!-- Settings -->
+    <div class="nav-item">
+        <a href="{{ route('settings.edit') }}" class="nav-link {{ request()->routeIs('settings.edit') ? 'active' : '' }}">
+            <i class="fas fa-cog nav-icon"></i>
+            <span class="nav-text">Settings</span>
+        </a>
+    </div>
 
-        <!-- Logout -->
-        <div class="nav-item">
-            <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <i class="fas fa-sign-out-alt nav-icon"></i>
-                <span class="nav-text">Logout</span>
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </div>
-    </nav>
+    <!-- Logout -->
+    <div class="nav-item">
+        <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="fas fa-sign-out-alt nav-icon"></i>
+            <span class="nav-text">Logout</span>
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    </div>
+</nav>
+
 </aside>
         <!-- Header -->
         <header class="header">
@@ -496,5 +503,18 @@
             document.getElementById('sidebar').classList.toggle('collapsed');
         }
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let currentPath = window.location.pathname;
+
+        document.querySelectorAll(".nav-link").forEach(link => {
+            if (link.getAttribute("href") === currentPath) {
+                link.classList.add("active");
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

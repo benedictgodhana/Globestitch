@@ -67,7 +67,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Experiences
-Route::resource('experiences', ExperienceController::class);
+Route::get('/experiences', [ExperienceController::class, 'index'])->name('experiences.index');
+Route::get('/experiences_create', [ExperienceController::class, 'createExperience'])->name('experiences.create');
+Route::post('/experiences', [ExperienceController::class, 'store'])->name('experiences.store');
+Route::get('/experiences/{experience}', [ExperienceController::class, 'show'])->name('experiences.show');
+Route::get('/experiences/{experience}/edit', [ExperienceController::class, 'edit'])->name('experiences.edit');
+Route::put('/experiences/{experience}', [ExperienceController::class, 'update'])->name('experiences.update');
+Route::delete('/experiences/{experience}', [ExperienceController::class, 'destroy'])->name('experiences.destroy');
 
 // Upcoming Trips
 
@@ -78,10 +84,6 @@ Route::resource('testimonials', TestimonialController::class);
 Route::resource('contact-messages', ContactMessageController::class);
 
 // About Us
-Route::get('/about-us/edit', [AboutUsController::class, 'edit'])->name('about-us.edit');
-Route::put('/about-us/update', [AboutUsController::class, 'update'])->name('about-us.update');
-
-// Social Media Links
 Route::resource('social-media', SocialMediaController::class);
 
 Route::resource('trips', TripController::class);

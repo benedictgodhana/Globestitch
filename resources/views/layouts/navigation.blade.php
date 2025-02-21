@@ -7,8 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-
-@font-face {
+        @font-face {
             font-family: 'Futura LT';
             src: url('/fonts/futura-lt/FuturaLT-Book.ttf') format('woff2'),
                  url('/fonts/futura-lt/FuturaLT.ttf') format('woff'),
@@ -32,6 +31,12 @@
         .hover-effect:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Active Link */
+        .active {
+            color: #2563EB; /* Blue */
+            font-weight: 600;
         }
 
         /* Mobile Menu Styles */
@@ -187,6 +192,16 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && isMenuOpen) {
                 toggleMenu();
+            }
+        });
+
+        // Add active class to the current page link
+        const currentUrl = window.location.pathname;
+        const navLinks = document.querySelectorAll('nav a');
+
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentUrl) {
+                link.classList.add('active');
             }
         });
     </script>

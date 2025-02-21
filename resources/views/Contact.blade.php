@@ -233,15 +233,15 @@
             <p>Have questions or need assistance? We're just a message away.</p>
             <div class="contact-item">
                 <i class="fas fa-map-marker-alt"></i>
-                <span>Westlands, Kenya</span>
+                <span>The Foundry  Africa, Viking House, Westlands</span>
             </div>
             <div class="contact-item">
                 <i class="fas fa-phone-alt"></i>
-                <span>(+254) 7XX-XXX-XXX</span>
+                <span> 0729020932/ 0705453175</span>
             </div>
             <div class="contact-item">
                 <i class="fas fa-envelope"></i>
-                <span>info@globestitch.com</span>
+                <span>info@globestitchtours.com/ peter@globestitchtours.com</span>
             </div>
         </div>
 

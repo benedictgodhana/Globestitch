@@ -24,7 +24,7 @@ class ExperienceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function createExperience()
     {
         // Return the view for creating a new experience
         return view('experiences.create');
