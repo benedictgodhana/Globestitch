@@ -8,6 +8,9 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.js" defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <style>
         :root {
             --primary-color: #059669; /* Green accent */
@@ -247,32 +250,49 @@
 
         <div class="contact-form">
             <h2>Send Us a Message</h2>
-            <form>
-                <!-- Name Field -->
-                <div class="form-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Your Name" required />
-                </div>
-                <!-- Email Field -->
-                <div class="form-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="Your Email" required />
-                </div>
-                <!-- Subject Field -->
-                <div class="form-group">
-                    <i class="fas fa-tag"></i>
-                    <input type="text" placeholder="Subject" required />
-                </div>
-                <!-- Message Field -->
-                <div class="form-group">
-                    <i class="fas fa-comment"></i>
-                    <textarea placeholder="Your Message" required></textarea>
-                </div>
-                <button type="submit">Send Message</button>
-            </form>
+            <form action="{{ route('contact.store') }}" method="POST">
+    @csrf
+    <div class="form-group">
+        <i class="fas fa-user"></i>
+        <input type="text" name="name" placeholder="Your Name" required />
+    </div>
+    <div class="form-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" name="email" placeholder="Your Email" required />
+    </div>
+    <div class="form-group">
+        <i class="fas fa-tag"></i>
+        <input type="text" name="subject" placeholder="Subject" required />
+    </div>
+    <div class="form-group">
+        <i class="fas fa-comment"></i>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+    </div>
+    <button type="submit">Send Message</button>
+</form>
+
         </div>
     </section>
 
     @include('layouts.footer')
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof toastr === 'undefined') {
+            console.error("Toastr is not loaded properly.");
+            return;
+        }
+
+        @if (session('success'))
+            toastr.success("{{ session('success') }}");
+        @endif
+
+        @if (session('error'))
+            toastr.error("{{ session('error') }}");
+        @endif
+    });
+</script>
+
+
 </html>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\bookings;
+use App\Models\inquiry;
 use App\Models\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -105,5 +107,60 @@ class TripController extends Controller
     {
         $trip->delete();
         return response()->json(['message' => 'Trip deleted successfully']);
+    }
+
+
+
+    public function book(Request $request)
+    {
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'trip_id' => 'required|exists:trips,id',
+            'number_of_travelers' => 'required|integer|min:1',
+            'special_requests' => 'nullable|string',
+        ]);
+
+        $booking = bookings::create([
+            'full_name' => $request->full_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'trip_id' => $request->trip_id,
+            'number_of_travelers' => $request->number_of_travelers,
+            'special_requests' => $request->special_requests,
+            'status' => 'pending', // Default status
+        ]);
+
+
+        return redirect()->back()->with('success', 'Your booking has been successfully submitted!');
+
+    }
+
+    /**
+     * Handle trip inquiries.
+     */
+    public function inquire(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'message' => 'required|string|max:1000',
+            'trip_id' => 'required|exists:trips,id',
+
+        ]);
+
+        $inquiry = inquiry::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'message' => $request->message,
+            'trip_id' => $request->trip_id,
+
+        ]);
+
+      return redirect()->back()->with('success', 'Your inquiry has been successfully submitted!');
+
     }
 }

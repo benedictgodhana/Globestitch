@@ -4,105 +4,39 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-
-.action-buttons {
-    display: flex;
-    gap: 0.5rem; /* Adjust spacing between buttons */
-}
-
-.action-buttons a,
-.action-buttons button {
-    padding: 0.5rem 0.75rem;
-    text-decoration: none;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-.view { background-color: #4f46e5; }
-.edit { background-color: #f59e0b; }
-.delete { background-color: #dc2626; }
-
-.view:hover { background-color: #4338ca; }
-.edit:hover { background-color: #d97706; }
-.delete:hover { background-color: #b91c1c; }
-
-        :root {
-            --primary-color: #4f46e5;
-            --secondary-color: #6b7280;
-            --background-color: #f9fafb;
-            --card-background: #ffffff;
-            --border-color: #e5e7eb;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .container {
-            padding: 2rem;
-        }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .trips-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: var(--card-background);
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            overflow: hidden;
-        }
-
-        .trips-table th,
-        .trips-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .trips-table th {
-            background-color: #f3f4f6;
-            color: var(--secondary-color);
-            font-weight: 600;
-        }
-
-        .trips-table tr:hover {
-            background-color: #f9fafb;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <x-app-layout>
-        <div class="container">
-            <h1>Trips</h1>
+        <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1>Trips Management</h1>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTripModal">Add Trip</button>
+            </div>
 
-            <!-- Add New Trip Button -->
-            <a href="{{ route('trips.create') }}" style="display: inline-block; margin-bottom: 1.5rem; padding: 0.75rem 1.5rem; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 0.25rem;">
-                Add New Trip
-            </a>
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
 
-            <!-- Trips Table -->
-            <table class="trips-table">
+            <form method="GET" action="{{ route('trips.index') }}" class="mb-3 d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="Search by trip title..." value="{{ request('search') }}">
+                <select name="filter" class="form-control me-2">
+                    <option value="">All Status</option>
+                    <option value="Upcoming" {{ request('filter') == 'Upcoming' ? 'selected' : '' }}>Upcoming</option>
+                    <option value="Ongoing" {{ request('filter') == 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
+                    <option value="Completed" {{ request('filter') == 'Completed' ? 'selected' : '' }}>Completed</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Search</button>
+                <a href="{{ route('trips.index') }}" class="btn btn-secondary ms-2">Reset</a>
+            </form>
+
+            <table class="table mt-3">
                 <thead>
                     <tr>
-                        <th>Title</th>
+                        <th>Trip Title</th>
                         <th>Description</th>
                         <th>Image</th>
                         <th>Start Date</th>
@@ -115,7 +49,7 @@
                     @foreach ($trips as $trip)
                         <tr>
                             <td>{{ $trip->title }}</td>
-                            <td>{{ $trip->description }}</td>
+                            <td>{{$trip->description}}</td>
                             <td>
                                 @if ($trip->image)
                                     <img src="{{ asset('storage/' . $trip->image) }}" alt="Trip Image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
@@ -127,22 +61,86 @@
                             <td>{{ $trip->end_date }}</td>
                             <td>{{ $trip->creator->name ?? 'Unknown' }}</td>
                             <td>
-                                <div class="action-buttons">
-                                    <a href="{{ route('trips.show', $trip->id) }}" class="view">View</a>
-                                    <a href="{{ route('trips.edit', $trip->id) }}" class="edit">Edit</a>
-                                    <form action="{{ route('trips.destroy', $trip->id) }}" method="POST" style="display: inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="delete">Delete</button>
-                                    </form>
-                                </div>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewModal{{ $trip->id }}">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $trip->id }}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
                             </td>
                         </tr>
+
+                        <!-- View Modal -->
+                        <div class="modal fade" id="viewModal{{ $trip->id }}" tabindex="-1" aria-labelledby="viewModalLabel{{ $trip->id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="viewModalLabel{{ $trip->id }}">Trip Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>Title:</strong> {{ $trip->title }}</p>
+                                        <p><strong>Destination:</strong> {{ $trip->destination }}</p>
+                                        <p><strong>Start Date:</strong> {{ $trip->start_date }}</p>
+                                        <p><strong>End Date:</strong> {{ $trip->end_date }}</p>
+                                        <p><strong>Status:</strong> {{ $trip->status }}</p>
+                                        <p><strong>Image:</strong></p>
+                                        <img src="{{ $trip->image_url }}" class="img-fluid" alt="Trip Image">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>
-
         </div>
     </x-app-layout>
+
+    <!-- Add Trip Modal -->
+    <div class="modal fade" id="addTripModal" tabindex="-1" aria-labelledby="addTripModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTripModalLabel">Add New Trip</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('trips.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Trip Title</label>
+                            <input type="text" name="title" id="title" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" name="description" id="description" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="date" name="start_date" id="start_date" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="date" name="end_date" id="end_date" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Trip Image</label>
+                            <input type="file" name="image" id="image" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Trip</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

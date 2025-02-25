@@ -15,7 +15,7 @@ class ExperienceController extends Controller
     public function index()
     {
         // Fetch all experiences from the database
-        $experiences = Experience::all();
+        $experiences = Experience::paginate(5);
 
         // Return the view with the experiences data
         return view('experiences.index', compact('experiences'));
