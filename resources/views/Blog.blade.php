@@ -200,7 +200,7 @@
                 <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
                 <div class="blog-content">
                     <h3 class="blog-title">{{ $blog->title }}</h3>
-                    <p class="blog-description">{{ $blog->description }}</p>
+                    <p class="blog-description">{{ Str::limit($blog->description, 50) }}</p>
                     <div class="blog-footer">
                         <a href="{{ route('blogs.showBlog', $blog->id) }}" class="read-more">
                             Read More
