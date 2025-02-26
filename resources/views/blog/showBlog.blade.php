@@ -30,7 +30,6 @@
             margin: 3rem auto;
             padding: 0 2rem;
             background: white;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
             border-radius: 15px;
             padding: 2rem;
         }
