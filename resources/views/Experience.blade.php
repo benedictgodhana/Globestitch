@@ -297,7 +297,7 @@
         <img src="{{ asset('storage/' . $experience->image) }}" alt="{{ $experience->category }}">
         <div class="experience-content">
             <h3 class="experience-title">{{ $experience->title }}</h3>
-            <p class="experience-description">{{ $experience->description }}</p>
+            <p class="experience-description">{{ Str::limit($experience->description, 50) }}</p>
             <div class="experience-footer">
                 <a href="{{ route('experience.show', $experience->id) }}" class="explore-more">
                     Discover More
