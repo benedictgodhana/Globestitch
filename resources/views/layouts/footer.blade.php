@@ -172,10 +172,11 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Experiences</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/experience">Experiences</a></li>
+                    <li><a href="/About">About Us</a></li>
+                    <li><a href="/upcoming_trips">Trips</a></li>
+                    <li><a href="/contact">Contact</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                     <li><a href="#">Terms & Conditions</a></li>
                     <li><a href="#">FAQs</a></li>
