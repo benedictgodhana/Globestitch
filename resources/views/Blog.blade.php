@@ -192,17 +192,17 @@
             <p class="header-subtitle">Discover amazing destinations, travel tips, and unforgettable experiences from around the world.</p>
         </div>
     </header>
-
     <section>
-        <div class="blog-grid">
+    <div class="blog-grid">
+        @foreach ($blogs as $blog)
             <article class="blog-card">
-                <span class="blog-category">Destinations</span>
-                <img src="/images/images.jpeg" alt="Must-Visit Destinations">
+                <span class="blog-category">{{ $blog->category }}</span>
+                <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
                 <div class="blog-content">
-                    <h3 class="blog-title">10 Must-Visit Destinations in 2024</h3>
-                    <p class="blog-description">Discover breathtaking places that will transform your perspective and create unforgettable memories. From hidden gems to iconic landmarks.</p>
+                    <h3 class="blog-title">{{ $blog->title }}</h3>
+                    <p class="blog-description">{{ $blog->description }}</p>
                     <div class="blog-footer">
-                        <a href="#" class="read-more">
+                        <a href="{{ route('blogs.showBlog', $blog->id) }}" class="read-more">
                             Read More
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -215,69 +215,15 @@
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <polyline points="12 6 12 12 16 14"></polyline>
                                 </svg>
-                                5 min read
+                                {{ $blog->reading_time }} min read
                             </span>
                         </div>
                     </div>
                 </div>
             </article>
-
-            <article class="blog-card">
-                <span class="blog-category">Tips & Tricks</span>
-                <img src="/images/travel_budget.jpg" alt="Budget Travel">
-                <div class="blog-content">
-                    <h3 class="blog-title">How to Travel on a Budget</h3>
-                    <p class="blog-description">Expert tips and practical strategies to explore the world without breaking the bank. Learn the secrets of budget-friendly travel.</p>
-                    <div class="blog-footer">
-                        <a href="#" class="read-more">
-                            Read More
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </a>
-                        <div class="blog-meta">
-                            <span class="meta-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                                8 min read
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="blog-card">
-                <span class="blog-category">Solo Travel</span>
-                <img src="/images/gettyimages-520176152-20241220203148003.jpg" alt="Solo Travel Guide">
-                <div class="blog-content">
-                    <h3 class="blog-title">Solo Travel: The Ultimate Guide</h3>
-                    <p class="blog-description">Embark on a journey of self-discovery. Everything you need to know about planning, safety, and making the most of your solo adventures.</p>
-                    <div class="blog-footer">
-                        <a href="#" class="read-more">
-                            Read More
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </a>
-                        <div class="blog-meta">
-                            <span class="meta-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                                6 min read
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </div>
-    </section>
-
+        @endforeach
+    </div>
+</section>
     @include('layouts.footer')
 </body>
 </html>

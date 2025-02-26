@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactMessageController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\UpcomingTripController;
 use App\Http\Controllers\UserController;
+use App\Models\Blog;
 use App\Models\Experience;
 use App\Models\Trip;
 use Illuminate\Support\Facades\Route;
@@ -47,8 +49,12 @@ Route::get('/contact', function () {
 });
 
 
+Route::get('/blogs/{id}', [BlogController::class, 'showBlog'])->name('blogs.showBlog');
+
+
 Route::get('/blog', function () {
-    return view('Blog');
+    $blogs=Blog::all();
+    return view('Blog',compact('blogs'));
 });
 
 
@@ -91,6 +97,8 @@ Route::resource('testimonials', TestimonialController::class);
 
 // Contact Messages
 Route::resource('contact-messages', ContactMessageController::class);
+
+Route::resource('blogs', BlogController::class);
 
 Route::get('/contact-messages', [ContactController::class, 'index'])->name('contact-messages.index'); // Display all contacts
 

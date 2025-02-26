@@ -461,13 +461,13 @@
         </a>
     </div>
 
-    <!-- About Us -->
     <div class="nav-item">
-        <a href="#" class="nav-link {{ request()->routeIs('about-us.edit') ? 'active' : '' }}">
-            <i class="fas fa-info-circle nav-icon"></i>
-            <span class="nav-text">About Us</span>
-        </a>
-    </div>
+    <a href="{{ route('blogs.index') }}" class="nav-link {{ request()->routeIs('blogs.*') ? 'active' : '' }}">
+        <i class="fas fa-blog nav-icon"></i>
+        <span class="nav-text">Blog</span>
+    </a>
+</div>
+
 
     <!-- Social Media Links -->
     <div class="nav-item">
