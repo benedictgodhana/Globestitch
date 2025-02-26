@@ -31,7 +31,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $blogs=Blog::latest()->take(3)->get();
+    return view('welcome',compact('blogs'));
 });
 
 Route::get('/experience', function () {

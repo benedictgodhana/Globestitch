@@ -494,30 +494,19 @@
     <section class="blog-section">
         <h2 data-aos="fade-up">Latest From Our Blog</h2>
         <div class="blog-grid">
+        @foreach ($blogs as $blog)
+
             <div class="blog-card" data-aos="fade-up" data-aos-delay="100">
-                <img src="/images/about-header.jpg" alt="Blog Post 1">
+                <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
                 <div class="blog-content">
-                    <h3 class="blog-title">Top 10 Wellness Retreats</h3>
-                    <p class="blog-description">Discover the best wellness retreats around the world for ultimate relaxation and rejuvenation.</p>
-                    <a href="#" class="blog-link">Read More →</a>
+                    <h3 class="blog-title">{{ $blog->title }}</h3>
+                    <p class="blog-description">{{ Str::limit($blog->description, 50) }}</p>
+                    <a href="{{ route('blogs.showBlog', $blog->id) }}" class="blog-link">Read More →</a>
                 </div>
             </div>
-            <div class="blog-card" data-aos="fade-up" data-aos-delay="200">
-                <img src="/images/africa-safari.jpg" alt="Blog Post 2">
-                <div class="blog-content">
-                    <h3 class="blog-title">Adventure Sports Guide</h3>
-                    <p class="blog-description">A comprehensive guide to the most thrilling adventure sports for adrenaline junkies.</p>
-                    <a href="#" class="blog-link">Read More →</a>
-                </div>
-            </div>
-            <div class="blog-card" data-aos="fade-up" data-aos-delay="300">
-                <img src="/images/cultural.jpg" alt="Blog Post 3">
-                <div class="blog-content">
-                    <h3 class="blog-title">Cultural Immersion Tips</h3>
-                    <p class="blog-description">Learn how to immerse yourself in local cultures and make the most of your travels.</p>
-                    <a href="#" class="blog-link">Read More →</a>
-                </div>
-            </div>
+            @endforeach
+
+
         </div>
     </section>
 
