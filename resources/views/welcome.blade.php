@@ -425,26 +425,70 @@
         </div>
     </section>
 
-    <!-- Testimonial Section -->
-    <section class="testimonial-section">
-        <h2 data-aos="fade-up">What Our Travelers Say</h2>
-        <div class="testimonial-slider" x-data="{ currentIndex: 0 }">
-            <div class="testimonial-slide" :class="{ 'active': currentIndex === 0 }" data-aos="fade-up">
-                <p class="testimonial-text">"The retreat with GlobeStitch was a life-changing experience! The yoga, nature, and holistic healing left me feeling rejuvenated."</p>
-                <p class="testimonial-author">– Jane K.</p>
-            </div>
-            <div class="testimonial-slide" :class="{ 'active': currentIndex === 1 }" data-aos="fade-up">
-                <p class="testimonial-text">"Watching my favorite football team live in London was an unforgettable experience, thanks to GlobeStitch’s seamless planning!"</p>
-                <p class="testimonial-author">– Kevin O.</p>
-            </div>
-            <div class="testimonial-slide" :class="{ 'active': currentIndex === 2 }" data-aos="fade-up">
-                <p class="testimonial-text">"The safari adventure was breathtaking. I’ll cherish the memories forever. Highly recommend GlobeStitch!"</p>
-                <p class="testimonial-author">– Alice J.</p>
-            </div>
-            <button @click="currentIndex = (currentIndex - 1 + 3) % 3" class="prev">&#10094;</button>
-            <button @click="currentIndex = (currentIndex + 1) % 3" class="next">&#10095;</button>
+ <!-- Testimonial Section -->
+<section class="testimonial-section p-8 bg-gradient-to-r from-blue-50 to-indigo-50">
+    <h2 class="text-center text-3xl font-bold mb-8 text-indigo-800">What Our Travelers Say</h2>
+
+    <div x-data="{
+        currentIndex: 0,
+        testimonials: [
+            { text: 'The retreat with GlobeStitch was a life-changing experience! The yoga, nature, and holistic healing left me feeling rejuvenated.', author: 'Jane K.' },
+            { text: 'Watching my favorite football team live in London was an unforgettable experience, thanks to GlobeStitch\'s seamless planning!', author: 'Kevin O.' },
+            { text: 'The safari adventure was breathtaking. I\'ll cherish the memories forever. Highly recommend GlobeStitch!', author: 'Alice J.' }
+        ]
+    }" class="relative max-w-2xl mx-auto">
+
+        <!-- Testimonial container -->
+        <div class="overflow-hidden relative rounded-xl shadow-xl bg-white h-64">
+            <!-- Individual testimonials -->
+            <template x-for="(testimonial, index) in testimonials" :key="index">
+                <div class="absolute inset-0 w-full h-full p-8 flex flex-col justify-center items-center transition-all duration-500 ease-in-out"
+                     x-show="currentIndex === index"
+                     x-cloak>
+                    <div class="relative w-full text-center">
+                        <span class="text-indigo-200 text-6xl absolute -top-6 left-0 opacity-50">"</span>
+                        <p class="text-lg text-gray-700 italic relative z-10 px-8" x-text="testimonial.text"></p>
+                        <span class="text-indigo-200 text-6xl absolute -bottom-10 right-0 opacity-50">"</span>
+                    </div>
+                    <div class="mt-6">
+                        <p class="font-bold text-indigo-700" x-text="'– ' + testimonial.author"></p>
+                    </div>
+                </div>
+            </template>
         </div>
-    </section>
+
+        <!-- Navigation controls -->
+        <div class="flex justify-center mt-6 space-x-4">
+            <!-- Previous button -->
+            <button @click="currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length"
+                    class="bg-white text-indigo-600 p-3 rounded-full shadow-md hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+            </button>
+
+            <!-- Indicator dots -->
+            <div class="flex items-center space-x-2">
+                <template x-for="(_, index) in testimonials" :key="index">
+                    <button @click="currentIndex = index"
+                            :class="{'bg-indigo-500': currentIndex === index, 'bg-gray-300': currentIndex !== index}"
+                            class="w-3 h-3 rounded-full transition-colors duration-300 focus:outline-none"></button>
+                </template>
+            </div>
+
+            <!-- Next button -->
+            <button @click="currentIndex = (currentIndex + 1) % testimonials.length"
+                    class="bg-white text-indigo-600 p-3 rounded-full shadow-md hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Auto-rotation script -->
+        <div x-init="setInterval(() => { currentIndex = (currentIndex + 1) % testimonials.length; }, 5000)"></div>
+    </div>
+</section>
 
     <!-- Blog Section -->
     <section class="blog-section">

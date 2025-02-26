@@ -186,9 +186,9 @@
             <!-- Contact Us -->
             <div class="footer-section">
                 <h3>Contact Us</h3>
-                <p><strong>Email:</strong> info@GlobeStitch.com</p>
-                <p><strong>Phone:</strong> +1 123-456-7890</p>
-                <p><strong>Address:</strong> 123 Travel Lane, Adventure City, USA</p>
+                <p><strong>Email:</strong>info@globestitchtours.com/ peter@globestitchtours.com</p>
+                <p><strong>Phone:</strong>0729020932/ 0705453175</p>
+                <p><strong>Address:</strong>The Foundry Africa, Viking House, Westlands</p>
                 <p><strong>Support Hours:</strong> Mon - Fri, 9 AM - 6 PM</p>
             </div>
 
