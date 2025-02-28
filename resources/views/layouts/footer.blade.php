@@ -192,7 +192,7 @@
                 <p><strong>Email:</strong>info@globestitchtours.com/ peter@globestitchtours.com</p>
                 <p><strong>Phone:</strong>0729020932/ 0705453175</p>
                 <p><strong>Address:</strong>The Foundry Africa, Viking House, Westlands</p>
-                <p><strong>Support Hours:</strong> Mon - Fri, 9 AM - 6 PM</p>
+                <p><strong>Support Hours:</strong> 24hrs</p>
             </div>
 
             <!-- Useful Resources -->

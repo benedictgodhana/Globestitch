@@ -107,12 +107,13 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16 items-center">
                 <!-- Logo -->
-                <div class="flex items-center space-x-2">
-                    <a href="#" class="flex items-center space-x-2 hover-effect">
-                        <img src="/images/logo.png" alt="Globestitch Logo" class="w-20 h-12 sm:w-28 sm:h-16">
-                        <span class="text-xl font-bold text-primary">Globestitch</span>
-                    </a>
-                </div>
+                <!-- Logo -->
+<div class="flex items-center space-x-2">
+    <a href="#">
+        <img src="/images/logo.png" alt="Globestitch Logo" class="w-32 h-auto">
+    </a>
+</div>
+
 
                 <!-- Desktop Navigation -->
                 <div class="hidden lg:flex items-center space-x-8">

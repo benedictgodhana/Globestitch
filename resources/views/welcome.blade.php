@@ -598,7 +598,7 @@
 
 <section class="stats-section py-16 bg-gray-100">
     <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        <div class="stat-item" x-data="{ count: 0 }" x-init="let target = 15000; let interval = setInterval(() => { if(count < target) count += 150; else { count = target; clearInterval(interval); }}, 10)">
+        <div class="stat-item" x-data="{ count: 0 }" x-init="let target = 1000; let interval = setInterval(() => { if(count < target) count += 150; else { count = target; clearInterval(interval); }}, 10)">
             <div class="text-4xl font-bold text-green-700 mb-2" x-text="count + '+'"></div>
             <div class="text-gray-600">Happy Travelers</div>
         </div>
@@ -606,7 +606,7 @@
             <div class="text-4xl font-bold text-green-700 mb-2" x-text="count + '+'"></div>
             <div class="text-gray-600">Destinations</div>
         </div>
-        <div class="stat-item" x-data="{ count: 0 }" x-init="let target = 200; let interval = setInterval(() => { if(count < target) count += 2; else { count = target; clearInterval(interval); }}, 30)">
+        <div class="stat-item" x-data="{ count: 0 }" x-init="let target = 100; let interval = setInterval(() => { if(count < target) count += 2; else { count = target; clearInterval(interval); }}, 30)">
             <div class="text-4xl font-bold text-green-700 mb-2" x-text="count + '+'"></div>
             <div class="text-gray-600">Trips Organized</div>
         </div>
