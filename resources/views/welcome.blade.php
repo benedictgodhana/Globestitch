@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <style>
         :root {
-            --primary-color: #10B981; /* Green */
+            --primary-color: #008000; /* Green */
             --secondary-color: #3B82F6; /* Blue */
             --background-color: #f9fafb;
             --card-background: #ffffff;
@@ -287,6 +287,83 @@
             color: var(--secondary-color);
         }
 
+        .experience-category {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+
+        .explore-more {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            gap: 0.5rem;
+        }
+
+        .explore-more:hover {
+            color: var(--secondary-color);
+            gap: 0.75rem;
+        }
+
+        .experience-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #6B7280;
+            font-size: 0.9rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .view-all-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+    margin-top: -30px;
+}
+
+.view-all-btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-3px);
+}
+
+.why-choose-us {
+    background: linear-gradient(180deg, #f0fff4 0%, #e6f4ea 100%);
+}
+.feature-card {
+    transition: all 0.3s ease-in-out;
+}
+.feature-card:hover {
+    transform: scale(1.05);
+}
+.trip-date {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            font-size: 14px
+        }
+
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .carousel h1 {
@@ -385,45 +462,209 @@
         <a href="#" class="cta-button">Discover Cultures</a>
     </div>
 </div>
-    <!-- Featured Experiences Section -->
-    <section>
-        <h2 style="text-align: center; margin: 5rem 0 3rem; font-size: 2.5rem; color: var(--text-color);" data-aos="fade-up">Featured Experiences</h2>
-        <div class="card-grid">
-            <div class="card" data-aos="fade-up" data-aos-delay="100">
-                <img src="/images/bali-trip.jpg" alt="Wellness Retreat">
-                <div class="card-content">
-                    <h3 class="card-title">Wellness Retreat</h3>
-                    <p class="card-description">Find peace and rejuvenation in serene surroundings with our curated wellness experiences.</p>
-                    <div class="card-footer">
-                        <span class="card-price">From $500</span>
-                        <a href="#" class="card-action">Book Now</a>
-                    </div>
+
+<section class="why-choose-us py-20 bg-gradient-to-b from-green-50 to-gray-100">
+    <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-center text-4xl font-extrabold text-green-700 mb-12 tracking-wide" data-aos="fade-up">
+            Why Choose GlobeStitch?
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <!-- Curated Experiences -->
+            <div
+                class="feature-card p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2"
+                x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false"
+                data-aos="fade-up">
+                <div class="icon-container mb-4 text-green-600 text-center">
+                    <i class="fas fa-award text-5xl" :class="{ 'text-yellow-500': hover }"></i>
                 </div>
+                <h3 class="text-2xl font-semibold mb-3 text-center">Curated Experiences</h3>
+                <p class="text-gray-600 text-center">
+                    Our expert team handpicks every destination and activity to ensure unforgettable memories.
+                </p>
             </div>
-            <div class="card" data-aos="fade-up" data-aos-delay="200">
-                <img src="/images/adventure.jpg" alt="Adventure Sports">
-                <div class="card-content">
-                    <h3 class="card-title">Adventure Sports</h3>
-                    <p class="card-description">Push your limits with thrilling outdoor activities and expert guides.</p>
-                    <div class="card-footer">
-                        <span class="card-price">From $300</span>
-                        <a href="#" class="card-action">Book Now</a>
-                    </div>
+
+            <!-- Adventure & Wellness -->
+            <div
+                class="feature-card p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2"
+                x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false"
+                data-aos="fade-up" data-aos-delay="100">
+                <div class="icon-container mb-4 text-green-600 text-center">
+                    <i class="fas fa-hiking text-5xl" :class="{ 'text-orange-500': hover }"></i>
                 </div>
+                <h3 class="text-2xl font-semibold mb-3 text-center">Wellness & Adventure</h3>
+                <p class="text-gray-600 text-center">
+                    A perfect blend of adventure, relaxation, and entertainment for an enriching experience.
+                </p>
             </div>
-            <div class="card" data-aos="fade-up" data-aos-delay="300">
-                <img src="/images/africa-safari.jpg" alt="Safari Adventure">
-                <div class="card-content">
-                    <h3 class="card-title">Safari Adventure</h3>
-                    <p class="card-description">Experience the majesty of wildlife in their natural habitat with our guided safaris.</p>
-                    <div class="card-footer">
-                        <span class="card-price">From $800</span>
-                        <a href="#" class="card-action">Book Now</a>
-                    </div>
+
+            <!-- Seamless Travel Planning -->
+            <div
+                class="feature-card p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2"
+                x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false"
+                data-aos="fade-up" data-aos-delay="200">
+                <div class="icon-container mb-4 text-green-600 text-center">
+                    <i class="fas fa-map-marked-alt text-5xl" :class="{ 'text-blue-500': hover }"></i>
                 </div>
+                <h3 class="text-2xl font-semibold mb-3 text-center">Seamless Travel</h3>
+                <p class="text-gray-600 text-center">
+                    Enjoy stress-free planning with our meticulous attention to detail.
+                </p>
+            </div>
+
+            <!-- Community-Driven Experiences -->
+            <div
+                class="feature-card p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2"
+                x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false"
+                data-aos="fade-up" data-aos-delay="300">
+                <div class="icon-container mb-4 text-green-600 text-center">
+                    <i class="fas fa-users text-5xl" :class="{ 'text-purple-500': hover }"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-3 text-center">Real Connections</h3>
+                <p class="text-gray-600 text-center">
+                    Community-driven experiences that foster meaningful relationships.
+                </p>
             </div>
         </div>
-    </section>
+
+        <!-- Call to Action -->
+        <div class="text-center mt-12">
+            <a href="/experience"
+                class="inline-block bg-green-700 text-white text-lg font-semibold px-8 py-4 rounded-full shadow-lg hover:bg-green-800 transition-all transform hover:-translate-y-1"
+                data-aos="zoom-in">
+                Explore Our Experiences →
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<section class="destinations py-16">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-center text-3xl font-bold mb-12 text-green-700">Upcoming Trips</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach ($trips as $trip)
+                <div class="destination-card relative overflow-hidden rounded-xl group">
+                    <img src="{{ asset('storage/' . $trip->image) }}" alt="{{ $trip->title }}"class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="destination-overlay absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                        <div>
+                            <h3 class="text-white text-xl font-bold mb-2">{{ $trip->title }}</h3>
+                            <span class="trip-date" >
+    {{ \Carbon\Carbon::parse($trip->start_date)->format('M d, Y') }} to
+    {{ \Carbon\Carbon::parse($trip->end_date)->format('M d, Y') }}
+</span>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <!-- View All Button -->
+        <div class="text-center mt-8">
+            <a href="upcoming_trips" class="bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-800 transition">
+                View All
+            </a>
+        </div>
+    </div>
+</section>
+
+
+
+<div
+    x-data="{ show: false }"
+    x-init="setTimeout(() => show = true, 200)"
+    x-show="show"
+    x-transition:enter="transition ease-out duration-1000"
+    x-transition:enter-start="opacity-0 translate-y-10"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    class="special-offer bg-green-700 text-white py-8"
+>
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+        <div class="text-center md:text-left mb-4 md:mb-0">
+            <h3 class="text-2xl font-bold">Exclusive Travel Deals!</h3>
+            <p>Book your next trip now and unlock amazing discounts!</p>
+        </div>
+        <a href="/upcoming_trips"
+           x-data="{ hover: false }"
+           @mouseenter="hover = true"
+           @mouseleave="hover = false"
+           :class="{ 'scale-105 shadow-lg': hover }"
+           class="bg-white text-green-700 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-transform transform">
+            Explore Now →
+        </a>
+    </div>
+</div>
+
+<section class="stats-section py-16 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="stat-item" x-data="{ count: 0 }" x-init="let target = 15000; let interval = setInterval(() => { if(count < target) count += 150; else { count = target; clearInterval(interval); }}, 10)">
+            <div class="text-4xl font-bold text-green-700 mb-2" x-text="count + '+'"></div>
+            <div class="text-gray-600">Happy Travelers</div>
+        </div>
+        <div class="stat-item" x-data="{ count: 0 }" x-init="let target = 50; let interval = setInterval(() => { if(count < target) count++; else { count = target; clearInterval(interval); }}, 50)">
+            <div class="text-4xl font-bold text-green-700 mb-2" x-text="count + '+'"></div>
+            <div class="text-gray-600">Destinations</div>
+        </div>
+        <div class="stat-item" x-data="{ count: 0 }" x-init="let target = 200; let interval = setInterval(() => { if(count < target) count += 2; else { count = target; clearInterval(interval); }}, 30)">
+            <div class="text-4xl font-bold text-green-700 mb-2" x-text="count + '+'"></div>
+            <div class="text-gray-600">Trips Organized</div>
+        </div>
+        <div class="stat-item" x-data="{ count: 0 }" x-init="let target = 98; let interval = setInterval(() => { if(count < target) count++; else { count = target; clearInterval(interval); }}, 40)">
+            <div class="text-4xl font-bold text-green-700 mb-2" x-text="count + '%'"></div>
+            <div class="text-gray-600">Positive Reviews</div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Featured Experiences Section -->
+    <section>
+    <h2 style="text-align: center; margin: 5rem 0 3rem; font-size: 2.5rem; color: var(--text-color);" data-aos="fade-up">
+        Featured Experiences
+    </h2>
+    <div class="card-grid">
+        @foreach($experiences as $experience)
+            <div class="card" data-aos="fade-up" data-aos-delay="300">
+                <span class="experience-category">{{ $experience->category }}</span>
+                <img src="{{ asset('storage/' . $experience->image) }}" alt="{{ $experience->category }}">
+                <div class="card-content">
+                    <h3 class="card-title">{{ $experience->title }}</h3>
+                    <p class="card-description">{{ Str::limit($experience->description, 50) }}</p>
+                    <div class="card-footer">
+                        <a href="{{ route('experience.show', $experience->id) }}" class="explore-more">
+                            Discover More
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                        <div class="experience-meta">
+                            <span class="meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                {{ \Carbon\Carbon::parse($experience->date)->format('F Y') }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <!-- View All Button -->
+    <div class="text-center mb-4 ">
+        <a href="/experience" class="view-all-btn" data-aos="fade-up" data-aos-delay="400">
+            View All Experiences →
+        </a>
+    </div>
+</section>
+
+
+
+
 
  <!-- Testimonial Section -->
 <section class="testimonial-section p-8 bg-gradient-to-r from-blue-50 to-indigo-50">
@@ -490,6 +731,9 @@
     </div>
 </section>
 
+
+
+
     <!-- Blog Section -->
     <section class="blog-section">
         <h2 data-aos="fade-up">Latest From Our Blog</h2>
@@ -509,6 +753,99 @@
 
         </div>
     </section>
+
+    <!-- <section class="partners py-16">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-center text-3xl font-bold mb-12 text-green-700">Our Trusted Partners</h2>
+
+
+        <div class="text-center mt-8">
+            <p class="text-xl font-semibold text-gray-600">More partners coming soon!</p>
+            <div class="mt-4 text-gray-400">
+                <p>Stay tuned for exciting additions!</p>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+
+
+<section class="newsletter py-16 bg-indigo-50">
+
+    <div class="max-w-3xl mx-auto px-4 text-center">
+    @if(session('success'))
+    <div id="success-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">{{ session('success') }}</span>
+    </div>
+@endif
+
+@if ($errors->has('email'))
+    <div id="error-message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
+        <strong class="font-bold">Oops!</strong>
+        <span class="block sm:inline">{{ $errors->first('email') }}</span>
+    </div>
+@endif
+
+<!-- JavaScript to make messages disappear -->
+<script>
+    setTimeout(() => {
+        document.getElementById('success-message')?.classList.add('hidden');
+        document.getElementById('error-message')?.classList.add('hidden');
+    }, 4000);
+</script>
+
+
+        <h2 class="text-3xl font-bold mb-4 text-green-700">Get Travel Inspiration</h2>
+        <p class="text-gray-600 mb-6">Subscribe to our newsletter for exclusive offers and travel tips</p>
+
+        <form
+            action="/subscribe"
+            method="POST"
+            class="max-w-md mx-auto flex gap-4"
+            x-data="{ loading: false }"
+            @submit="loading = true"
+        >
+            @csrf
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                class="flex-1 px-4 py-3 rounded-full border focus:outline-none focus:ring-2 focus:ring-green-500"
+                required
+            >
+
+            <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition-colors flex items-center">
+                <span x-show="!loading">Subscribe</span>
+                <svg x-show="loading" class="animate-spin h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+            </button>
+        </form>
+    </div>
+</section>
+
+
+<script>
+    function newsletterForm() {
+        return {
+            email: '',
+            message: '',
+            async subscribe() {
+                let response = await fetch("{{ route('subscribe') }}", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": "{{ csrf_token() }}" },
+                    body: JSON.stringify({ email: this.email }),
+                });
+
+                let data = await response.json();
+                this.message = data.message;
+                this.email = '';
+            }
+        };
+    }
+</script>
 
     <!-- Your existing Footer -->
     @include('layouts.footer')

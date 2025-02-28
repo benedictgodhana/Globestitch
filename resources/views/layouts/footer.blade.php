@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Footer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css">
     <style>
         /* Base styles */
         body {
@@ -107,7 +108,6 @@
         }
 
         .social-icons a:hover {
-            background-color: #ff6b6b; /* Coral accent color */
             transform: scale(1.1);
         }
 
@@ -162,10 +162,14 @@
                     Our mission is to inspire wanderlust and provide seamless travel planning services.
                 </p>
                 <div class="social-icons">
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v3l3-3v-4z"/></svg></a>
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 7.22c-.78 0-1.53.23-2.15.62l-1.8-1.79C18.3 5.4 17.26 5 16 5H8c-1.26 0-2.3.4-3.17 1.09l-1.8 1.8c-.6-.39-1.37-.62-2.15-.62C3 7.22 2 8.22 2 9.41V15c0 1.19.9 2.19 2 2.19h16c1.1 0 2-.99 2-2.19V9.41c0-1.19-.99-2.19-2.18-2.19zM5.5 15c0 .83.67 1.5 1.5 1.5h11c.83 0 1.5-.67 1.5-1.5V9.41c0-.83-.67-1.5-1.5-1.5H7c-.83 0-1.5.67-1.5 1.5V15z"/></svg></a>
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.5 6.92c-.18-.53-.66-.92-1.25-.92h-21C.67 6 0 6.67 0 7.5v12c0 .83.67 1.5 1.5 1.5h11.36c-.18-1.06-.88-1.88-1.87-2.37V12h-3v4h-2v-4H8v-3.57c.85.2 1.69.58 2.42.99v2.78h3.34c-.2-.96-.68-1.88-1.48-2.56v-2.8h-2v-3h2v-1.79c.63.24 1.24.59 1.79.99V7.5h3.5c-.08-.46-.52-.8-1-1.02V6.92zM19.5 19c-.83 0-1.5-.67-1.5-1.5v-12c0-.83.67-1.5 1.5-1.5h2c.83 0 1.5.67 1.5 1.5v12c0 .83-.67 1.5-1.5 1.5h-2z"/></svg></a>
-                </div>
+    <a href="#"><i class="mdi mdi-facebook"></i></a>
+    <a href="#"><i class="mdi mdi-twitter"></i></a>
+    <a href="#"><i class="mdi mdi-linkedin"></i></a>
+    <a href="https://www.instagram.com/globestitchtours/?igsh=MWd3am1pY3Y4N2Q3aQ%3D%3D" target="_blank" rel="noopener noreferrer">
+    <i class="mdi mdi-instagram"></i>
+</a>
+</div>
+
             </div>
 
             <!-- Quick Links -->
@@ -177,10 +181,8 @@
                     <li><a href="/About">About Us</a></li>
                     <li><a href="/upcoming_trips">Trips</a></li>
                     <li><a href="/contact">Contact</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Careers</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/faqs">FAQs</a></li>
                 </ul>
             </div>
 
@@ -194,17 +196,7 @@
             </div>
 
             <!-- Useful Resources -->
-            <div class="footer-section">
-                <h3>Useful Resources</h3>
-                <ul>
-                    <li><a href="#">Travel Tips</a></li>
-                    <li><a href="#">Destination Guides</a></li>
-                    <li><a href="#">Travel Insurance</a></li>
-                    <li><a href="#">Currency Converter</a></li>
-                    <li><a href="#">Travel Blog</a></li>
-                    <li><a href="#">Customer Reviews</a></li>
-                    <li><a href="#">Partnerships</a></li>
-                </ul>
+
             </div>
         </div>
 

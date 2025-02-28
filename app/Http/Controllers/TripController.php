@@ -34,38 +34,34 @@ class TripController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    // Validate input
-    $validatedData = $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'start_date' => 'required|date',
-        'end_date' => 'required|date|after_or_equal:start_date',
-    ]);
+    {
+        // Validate input
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
 
-    // Handle image upload if provided
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('trip_images', 'public');
-        $validatedData['image'] = $imagePath;
+        // Handle image upload if provided
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('trip_images', 'public');
+            $validatedData['image'] = $imagePath;
+        }
+
+        // Create trip with authenticated user
+        Trip::create([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'image' => $validatedData['image'] ?? null,
+            'start_date' => $validatedData['start_date'],
+            'end_date' => $validatedData['end_date'],
+            'created_by' => Auth::id(),
+        ]);
+
+        return redirect()->route('trips.index')->with('success', 'Trip created successfully.');
     }
-
-    // Create trip with authenticated user
-    $trip = Trip::create([
-        'title' => $validatedData['title'],
-        'description' => $validatedData['description'],
-        'image' => $validatedData['image'] ?? null,
-        'start_date' => $validatedData['start_date'],
-        'end_date' => $validatedData['end_date'],
-        'created_by' => Auth::id(),
-    ]);
-
-    return response()->json([
-        'message' => 'Trip created successfully',
-        'trip' => $trip
-    ], 201);
-}
-
 
     /**
      * Display the specified resource.
@@ -87,18 +83,20 @@ class TripController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Trip $trip)
-    {
-        $validated = $request->validate([
-            'title' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string',
-            'image' => 'nullable|string',
-            'start_date' => 'sometimes|date',
-            'end_date' => 'sometimes|date|after_or_equal:start_date',
-        ]);
+{
+    $validated = $request->validate([
+        'title' => 'sometimes|string|max:255',
+        'description' => 'sometimes|string',
+        'image' => 'nullable|string',
+        'start_date' => 'sometimes|date',
+        'end_date' => 'sometimes|date|after_or_equal:start_date',
+    ]);
 
-        $trip->update($validated);
-        return response()->json($trip);
-    }
+    // Update the trip with the validated data
+    $trip->update($validated);
+
+    return redirect()->route('trips.index')->with('success', 'Trip updated successfully.');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -106,8 +104,10 @@ class TripController extends Controller
     public function destroy(Trip $trip)
     {
         $trip->delete();
-        return response()->json(['message' => 'Trip deleted successfully']);
+
+        return redirect()->route('trips.index')->with('success', 'Trip deleted successfully.');
     }
+
 
 
 

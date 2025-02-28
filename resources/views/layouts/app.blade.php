@@ -6,7 +6,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+<title>Globestitch </title>
     <style>
 
 
@@ -385,6 +385,59 @@
     color: white;
     font-weight: bold;
 }
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+}
+
+.notification-wrapper,
+.user-menu-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    min-width: 180px;
+    z-index: 1000;
+}
+
+.dropdown-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu ul li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-menu ul li a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown-menu ul li:hover {
+    background: #f5f5f5;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
 
 
     </style>
@@ -445,14 +498,6 @@
         </a>
     </div>
 
-    <!-- Testimonials -->
-    <div class="nav-item">
-        <a href="{{ route('testimonials.index') }}" class="nav-link {{ request()->routeIs('testimonials.index') ? 'active' : '' }}">
-            <i class="fas fa-comments nav-icon"></i>
-            <span class="nav-text">Testimonials</span>
-        </a>
-    </div>
-
     <!-- Contact Messages -->
     <div class="nav-item">
         <a href="{{ route('contact-messages.index') }}" class="nav-link {{ request()->routeIs('contact-messages.index') ? 'active' : '' }}">
@@ -469,13 +514,6 @@
 </div>
 
 
-    <!-- Social Media Links -->
-    <div class="nav-item">
-        <a href="{{ route('social-media.index') }}" class="nav-link {{ request()->routeIs('social-media.index') ? 'active' : '' }}">
-            <i class="fas fa-share-alt nav-icon"></i>
-            <span class="nav-text">Social Media</span>
-        </a>
-    </div>
 
     <!-- Settings -->
     <div class="nav-item">
@@ -501,24 +539,39 @@
 </aside>
         <!-- Header -->
         <header class="header">
-            <div class="header-left">
-                <button class="toggle-btn" onclick="toggleSidebar()">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-            <div class="header-right">
-                <button class="notification-btn">
-                    <i class="fas fa-bell"></i>
-                    <span class="notification-badge">3</span>
-                </button>
-                <div class="user-menu">
-                    <div class="user-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <span>{{Auth::user()->name}}</span>
+    <div class="header-left">
+        <button class="toggle-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    <div class="header-right">
+        <!-- Notification Button -->
+
+        <!-- User Menu -->
+        <div class="user-menu-wrapper">
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
                 </div>
+                <span>{{ Auth::user()->name }}</span>
             </div>
-        </header>
+            <div class="dropdown-menu user-dropdown">
+                <ul>
+                    <li><a href="{{ route('settings.edit') }}"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
 
         <!-- Main Content -->
         <main class="main-content">
@@ -543,6 +596,51 @@
         });
     });
 </script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const userMenu = document.querySelector(".user-menu");
+        const notificationMenu = document.createElement("div");
+        const userDropdown = document.createElement("div");
+
+        // Create Notification Menu
+
+
+        // Create User Dropdown Menu
+        userDropdown.classList.add("dropdown-menu");
+        userDropdown.innerHTML = `
+            <ul>
+                <li><a href="{{ route('settings.edit') }}"><i class="fas fa-cog"></i> Settings</a></li>
+                                <li>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>            </ul>
+        `;
+        userMenu.appendChild(userDropdown);
+
+
+        // Toggle User Menu
+        userMenu.addEventListener("click", function (event) {
+            event.stopPropagation();
+            userDropdown.classList.toggle("show");
+            notificationMenu.classList.remove("show"); // Hide notification menu
+        });
+
+        // Hide menus when clicking outside
+        document.addEventListener("click", function () {
+            notificationMenu.classList.remove("show");
+            userDropdown.classList.remove("show");
+        });
+    });
+</script>
+
+
+
 
 </body>
 </html>

@@ -98,17 +98,13 @@ class BlogController extends Controller
 
         $blog->update($request->all());
 
-        return response()->json($blog);
+        return redirect()->back()->with('success', 'Blog updated successfully');
     }
-
-    /**
-     * Remove the specified blog.
-     */
     public function destroy(Blog $blog)
     {
         $blog->delete();
 
-        return response()->json(['message' => 'Blog deleted successfully']);
+        return redirect()->back()->with('success', 'Blog deleted successfully');
     }
 
 

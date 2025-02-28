@@ -37,7 +37,22 @@
         .active {
             color: #2563EB; /* Blue */
             font-weight: 600;
+            position: relative;
+        transition: color 0.3s ease;
         }
+
+        .active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #2563EB;
+        transform: scaleX(1);
+        transition: transform 0.3s ease;
+    }
+
 
         /* Mobile Menu Styles */
         .mobile-menu {
@@ -106,6 +121,7 @@
                     <a href="/experience" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Experience</a>
                     <a href="/upcoming_trips" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Upcoming Trips</a>
                     <a href="/blog" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Blog</a>
+                    <a href="/faqs" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">FAQS</a>
                     <a href="/contact" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                     <a href="/login" class="bg-primary text-white hover:bg-blue-600 px-4 py-2 rounded-full text-sm font-medium">Login</a>
                 </div>
@@ -148,6 +164,13 @@
                     <div class="flex items-center space-x-3">
                         <i class="fas fa-blog w-6"></i>
                         <span>Blog</span>
+                    </div>
+                </a>
+
+                <a href="/faqs" class="block text-primary hover:bg-blue-50 px-4 py-3 rounded-lg transition-colors">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-question-circle w-6"></i>
+                        <span>FAQS</span>
                     </div>
                 </a>
                 <a href="/contact" class="block text-primary hover:bg-blue-50 px-4 py-3 rounded-lg transition-colors">

@@ -17,7 +17,26 @@
     <x-app-layout>
         <div>
             <div class="card p-4">
+            @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <script>
+        setTimeout(function() {
+            let successAlert = document.getElementById('successAlert');
+            if (successAlert) {
+                let alertInstance = new bootstrap.Alert(successAlert);
+                alertInstance.close();
+            }
+        }, 4000); // 4 seconds
+    </script>
+@endif
+
                 <div class="d-flex justify-content-between align-items-center mb-3">
+
+
                     <h1>Experiences Management</h1>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExperienceModal">
                         <i class="fas fa-plus"></i> Add Experience
@@ -70,12 +89,16 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#editExperienceModal" onclick="editExperience({{ $experience->id }})">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteExperienceModal" onclick="deleteExperience({{ $experience->id }})">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                                <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#editExperienceModal"
+    onclick="editExperience({{ $experience->id }}, '{{ $experience->title }}', '{{ $experience->category }}', '{{ $experience->description }}', '{{ asset('storage/' . $experience->image) }}',)">
+    <i class="fas fa-edit"></i>
+</button>
+
+<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteExperienceModal"
+    onclick="deleteExperience({{ $experience->id }})">
+    <i class="fas fa-trash"></i>
+</button>
+
                                 </td>
                             </tr>
                         @endforeach
@@ -137,40 +160,78 @@
         </div>
     </div>
 
-    <!-- Edit Experience Modal -->
-    <div class="modal fade" id="editExperienceModal" tabindex="-1" aria-labelledby="editExperienceModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editExperienceModalLabel">Edit Experience</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label">Title</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Category</label>
-                            <select class="form-select">
-                                <option>Adventure</option>
-                                <option>Culture</option>
-                                <option>Relaxation</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control"></textarea>
-                        </div>
 
 
-                        <button type="submit" class="btn btn-success">Update</button>
-                    </form>
-                </div>
+
+<!-- Edit Experience Modal -->
+<div class="modal fade" id="editExperienceModal" tabindex="-1" aria-labelledby="editExperienceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editExperienceModalLabel">Edit Experience</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editExperienceForm" action="{{ route('experiences.update', '') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <input type="hidden" id="editExperienceId" name="id">
+
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" id="editTitle" name="title">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" id="editCategory" name="category">
+                            <option value="Adventure">Adventure</option>
+                            <option value="Culture">Culture</option>
+                            <option value="Relaxation">Relaxation</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" id="editDescription" name="description"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editImage">Image</label>
+                        <input type="file" name="image" id="editImage" accept="image/*" class="form-control">
+                        <div class="mt-2">
+                            <img id="editImagePreview" src="" alt="Current Image" style="width: 80px; height: 80px; object-fit: cover; border-radius: 5px;">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Update</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Delete Experience Modal -->
+<div class="modal fade" id="deleteExperienceModal" tabindex="-1" aria-labelledby="deleteExperienceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteExperienceModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this experience?</p>
+                <form id="deleteExperienceForm" action="{{ route('experiences.destroy', '') }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" id="deleteExperienceId" name="id">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -187,5 +248,33 @@
         @endif
     });
 </script>
+
+<script>
+function editExperience(id, title, category, description, imageUrl, status) {
+    document.getElementById("editExperienceId").value = id;
+    document.getElementById("editTitle").value = title;
+    document.getElementById("editCategory").value = category;
+    document.getElementById("editDescription").value = description;
+
+    // Show current image if available
+    if (imageUrl) {
+        document.getElementById("editImagePreview").src = imageUrl;
+    } else {
+        document.getElementById("editImagePreview").src = '';
+    }
+
+    // Update form action dynamically
+    document.getElementById("editExperienceForm").action = "/experiences/" + id;
+}
+</script>
+
+
+<script>
+function deleteExperience(id) {
+    document.getElementById("deleteExperienceId").value = id;
+    document.getElementById("deleteExperienceForm").action = "/experiences/" + id;
+}
+</script>
+
 </body>
 </html>

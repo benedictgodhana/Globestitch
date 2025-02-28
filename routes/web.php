@@ -10,13 +10,18 @@ use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SocialMediaController;
+use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\UpcomingTripController;
 use App\Http\Controllers\UserController;
+use App\Jobs\SendNewsletterJob;
+use App\Mail\NewsletterMail;
 use App\Models\Blog;
 use App\Models\Experience;
+use App\Models\Subscriber;
 use App\Models\Trip;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,7 +37,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $blogs=Blog::latest()->take(3)->get();
-    return view('welcome',compact('blogs'));
+    $trips=Trip::latest()->take(3)->get();
+    $experiences=Experience::latest()->take(3)->get();
+    return view('welcome',compact('blogs','trips','experiences'));
 });
 
 Route::get('/experience', function () {
@@ -40,13 +47,30 @@ Route::get('/experience', function () {
     $trips = Trip::all(); // Fetch all experiences
     return view('Experience', compact('experiences','trips'));
 });
+Route::get('/send-newsletter', function () {
+    $subscribers = Subscriber::all();
+    $trips = Trip::latest()->take(3)->get();
+    $content = "Here is the latest update from our travel site. Enjoy exclusive offers and tips!";
 
+    foreach ($subscribers as $subscriber) {
+        Mail::to($subscriber->email)->send(new NewsletterMail($content, $trips));
+    }
+
+    return back()->with('success', 'Newsletter sent successfully!');
+});
 
 Route::get('/experiences/{id}', [ExperienceController::class, 'ShowExperience'])->name('experience.show');
 
-
+Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribe');
 Route::get('/contact', function () {
     return view('Contact');
+});
+
+
+
+
+Route::get('/faqs', function () {
+    return view('FAQS');
 });
 
 
@@ -78,7 +102,7 @@ Route::post('/trips/inquire', [TripController::class, 'inquire'])->name('trip.in
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -121,10 +145,11 @@ Route::patch('/bookings/{booking}', [BookingController::class, 'update'])->name(
 Route::get('/settings/edit', [SettingController::class, 'edit'])->name('settings.edit');
 Route::put('/settings/update', [SettingController::class, 'update'])->name('settings.update');
 
-
+Route::put('/notifications/{id}', [SettingController::class, 'update'])->name('notifications.update');
 
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 Route::post('/users/{user}/restore', [UserController::class, 'restore'])->name('users.restore');
