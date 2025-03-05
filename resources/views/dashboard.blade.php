@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <title>Globestitch </title>
+    <title>GlobeStitch - Craft Your Perfect Travel Story</title>
+    <link rel="icon" type="image/png" href="/images/logo.png">
     <style>
         :root {
             --primary-color: #4f46e5;

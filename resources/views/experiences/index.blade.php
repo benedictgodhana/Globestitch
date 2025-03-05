@@ -90,7 +90,13 @@
                                 </td>
                                 <td>
                                 <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#editExperienceModal"
-    onclick="editExperience({{ $experience->id }}, '{{ $experience->title }}', '{{ $experience->category }}', '{{ $experience->description }}', '{{ asset('storage/' . $experience->image) }}',)">
+    onclick="editExperience(
+        {{ $experience->id }},
+        {{ json_encode($experience->title) }},
+        {{ json_encode($experience->category) }},
+        {{ json_encode($experience->description) }},
+        {{ json_encode($experience->image ? asset('storage/' . $experience->image) : '') }}
+    )">
     <i class="fas fa-edit"></i>
 </button>
 
@@ -101,65 +107,6 @@
 
                                 </td>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </x-app-layout>
-
-    <!-- Add Experience Modal -->
-    <div class="modal fade" id="addExperienceModal" tabindex="-1" aria-labelledby="addExperienceModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addExperienceModalLabel">Add Experience</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                <form action="{{ route('experiences.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-
-                        <div class="mb-3">
-                            <label class="form-label">Title</label>
-                            <input type="text" class="form-control" name="title">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Category</label>
-                            <select class="form-select" name="category">
-                                <option>Adventure</option>
-                                <option>Culture</option>
-                                <option>Relaxation</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" name="description"></textarea>
-                        </div>
-
-
-
-                        <div class="mb-3">
-                        <label for="status">Status</label>
-                <select name="status" id="status" required class="form-select">
-                    <option value="active">Active</option>
-                    <option value="pending">Pending</option>
-                    <option value="inactive">Inactive</option>
-                </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="image">Image</label>
-                            <input type="file" name="image" id="image" accept="image/*" class="form-control">
-
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 
 
@@ -183,13 +130,15 @@
                         <input type="text" class="form-control" id="editTitle" name="title">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Category</label>
-                        <select class="form-select" id="editCategory" name="category">
-                            <option value="Adventure">Adventure</option>
-                            <option value="Culture">Culture</option>
-                            <option value="Relaxation">Relaxation</option>
-                        </select>
-                    </div>
+    <label class="form-label">Category</label>
+    <input list="categoryOptions" class="form-control" id="editCategory" name="category" placeholder="Select or type a category">
+    <datalist id="categoryOptions">
+        <option value="Adventure">
+        <option value="Culture">
+        <option value="Relaxation">
+    </datalist>
+</div>
+
                     <div class="mb-3">
                         <label class="form-label">Description</label>
                         <textarea class="form-control" id="editDescription" name="description"></textarea>
@@ -231,6 +180,70 @@
     </div>
 </div>
 
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </x-app-layout>
+
+    <!-- Add Experience Modal -->
+    <div class="modal fade" id="addExperienceModal" tabindex="-1" aria-labelledby="addExperienceModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addExperienceModalLabel">Add Experience</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <form action="{{ route('experiences.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title">
+                        </div>
+                        <div class="mb-3">
+    <label class="form-label">Category</label>
+    <input list="categoryOptions" class="form-control" id="editCategory" name="category" placeholder="Select or type a category">
+    <datalist id="categoryOptions">
+        <option value="Adventure">
+        <option value="Culture">
+        <option value="Relaxation">
+    </datalist>
+</div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description"></textarea>
+                        </div>
+
+
+
+                        <div class="mb-3">
+                        <label for="status">Status</label>
+                <select name="status" id="status" required class="form-select">
+                    <option value="active">Active</option>
+                    <option value="pending">Pending</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="image">Image</label>
+                            <input type="file" name="image" id="image" accept="image/*" class="form-control">
+
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -248,26 +261,36 @@
         @endif
     });
 </script>
-
 <script>
-function editExperience(id, title, category, description, imageUrl, status) {
+
+function editExperience(id, title, category, description, imageUrl) {
+    const form = document.getElementById("editExperienceForm");
+
+    // Update form action dynamically with the correct experience ID
+    form.action = `/experiences/${encodeURIComponent(id)}`;
+
+    // Populate form fields
     document.getElementById("editExperienceId").value = id;
     document.getElementById("editTitle").value = title;
-    document.getElementById("editCategory").value = category;
+    document.getElementById("editCategory").value = category; // ✅ Ensures category is set correctly
     document.getElementById("editDescription").value = description;
 
-    // Show current image if available
-    if (imageUrl) {
-        document.getElementById("editImagePreview").src = imageUrl;
+    // Handle image preview
+    const imagePreview = document.getElementById("editImagePreview");
+    if (imageUrl && imageUrl.trim() !== "") {
+        imagePreview.src = imageUrl;
+        imagePreview.style.display = 'block';
     } else {
-        document.getElementById("editImagePreview").src = '';
+        imagePreview.src = "#"; // Keeps a placeholder if no image
+        imagePreview.style.display = 'none';
     }
 
-    // Update form action dynamically
-    document.getElementById("editExperienceForm").action = "/experiences/" + id;
+    // Open the modal dynamically
+    let modal = new bootstrap.Modal(document.getElementById("editExperienceModal"));
+    modal.show();
 }
-</script>
 
+</script>
 
 <script>
 function deleteExperience(id) {
