@@ -120,7 +120,7 @@
                     <a href="/" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
                     <a href="/about" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">About Us</a>
                     <a href="/experience" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Experience</a>
-                    <a href="/upcoming_trips" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Upcoming Trips</a>
+                    <a href="/packages" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Packages</a>
                     <a href="/blog" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Blog</a>
                     <a href="/faqs" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">FAQS</a>
                     <a href="/contact" class="text-primary hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>

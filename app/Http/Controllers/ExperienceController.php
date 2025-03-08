@@ -156,10 +156,10 @@ class ExperienceController extends Controller
         return redirect()->route('experiences.index')->with('success', 'Experience deleted successfully!');
     }
 
-
     public function showExperience($id)
     {
-        $experience = Experience::findOrFail($id);
+        $experience = Experience::with('trips')->findOrFail($id); // Eager load trips
         return view('Experiences.ShowExperience', compact('experience'));
     }
+
 }

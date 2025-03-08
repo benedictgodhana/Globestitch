@@ -25,4 +25,10 @@ class Experience extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+
+    public function trips()
+    {
+        return $this->hasMany(Trip::class);
+    }
 }

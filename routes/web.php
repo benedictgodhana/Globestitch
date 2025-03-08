@@ -83,7 +83,7 @@ Route::get('/blog', function () {
 });
 
 
-Route::get('/upcoming_trips', function () {
+Route::get('/packages', function () {
     $trips = Trip::all(); // Fetch all experiences
 
     return view('Trips',compact('trips'));

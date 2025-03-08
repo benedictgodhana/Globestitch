@@ -28,8 +28,8 @@
 @endif
 
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1>Trips Management</h1>
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTripModal">Add Trip</button>
+                <h1>Packages Management</h1>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTripModal">Add Package</button>
             </div>
 
             <form method="GET" action="{{ route('trips.index') }}" class="mb-3 d-flex">
@@ -47,9 +47,10 @@
             <table class="table mt-3">
                 <thead>
                     <tr>
-                        <th>Trip Title</th>
+                        <th>Package Title</th>
                         <th>Description</th>
                         <th>Image</th>
+                        <th>Experience</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Created By</th>
@@ -60,7 +61,7 @@
                     @foreach ($trips as $trip)
                         <tr>
                             <td>{{ $trip->title }}</td>
-                            <td>{{$trip->description}}</td>
+                            <td>{{ \Illuminate\Support\Str::words($trip->description, 5, '...') }}</td>
                             <td>
                                 @if ($trip->image)
                                     <img src="{{ asset('storage/' . $trip->image) }}" alt="Trip Image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
@@ -68,6 +69,7 @@
                                     No Image
                                 @endif
                             </td>
+                            <td>{{ $trip->experience->title ?? 'N/A'}}</td>
                             <td>{{ $trip->start_date }}</td>
                             <td>{{ $trip->end_date }}</td>
                             <td>{{ $trip->creator->name ?? 'Unknown' }}</td>
@@ -85,22 +87,27 @@
 
                         </tr>
 
-                       <!-- View Modal -->
+                      <!-- View Modal -->
 <div class="modal fade" id="viewModal{{ $trip->id }}" tabindex="-1" aria-labelledby="viewModalLabel{{ $trip->id }}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="viewModalLabel{{ $trip->id }}">Trip Details</h5>
+                <h5 class="modal-title" id="viewModalLabel{{ $trip->id }}">Package Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p><strong>Title:</strong> {{ $trip->title }}</p>
                 <p><strong>Destination:</strong> {{ $trip->destination }}</p>
+                <p><strong>Experience:</strong> {{ $trip->experience->title ?? 'N/A' }}</p>
                 <p><strong>Start Date:</strong> {{ $trip->start_date }}</p>
                 <p><strong>End Date:</strong> {{ $trip->end_date }}</p>
-                <p><strong>Status:</strong> {{ $trip->status }}</p>
+                <p><strong>Description:</strong> {{$trip->description }}</p>
                 <p><strong>Image:</strong></p>
-                <img src="{{ $trip->image_url }}" class="img-fluid" alt="Trip Image">
+                @if($trip->image)
+                    <img  src="{{ asset('storage/' . $trip->image) }}" class="img-fluid rounded" alt="Trip Image">
+                @else
+                    <p class="text-muted">No image available</p>
+                @endif
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -137,6 +144,20 @@
                         <label class="form-label">End Date</label>
                         <input type="date" name="end_date" class="form-control" value="{{ $trip->end_date }}" required>
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Experience</label>
+                        <select name="experience_id" class="form-control" required>
+                            <option value="" disabled>Select Experience</option>
+                            @foreach ($experiences as $experience)
+                                <option value="{{ $experience->id }}"
+                                    {{ $trip->experience_id == $experience->id ? 'selected' : '' }}>
+                                    {{ $experience->title }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label">Trip Image</label>
                         <input type="file" name="image" class="form-control">
@@ -144,12 +165,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-warning">Update Trip</button>
+                    <button type="submit" class="btn btn-warning">Update Package</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal{{ $trip->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $trip->id }}" aria-hidden="true">
@@ -180,47 +202,57 @@
         </div>
     </x-app-layout>
 
-    <!-- Add Trip Modal -->
-    <div class="modal fade" id="addTripModal" tabindex="-1" aria-labelledby="addTripModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addTripModalLabel">Add New Trip</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('trips.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Trip Title</label>
-                            <input type="text" name="title" id="title" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <input type="text" name="description" id="description" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="start_date" class="form-label">Start Date</label>
-                            <input type="date" name="start_date" id="start_date" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="end_date" class="form-label">End Date</label>
-                            <input type="date" name="end_date" id="end_date" class="form-control" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Trip Image</label>
-                            <input type="file" name="image" id="image" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add Trip</button>
-                    </div>
-                </form>
+   <!-- Add Trip Modal -->
+<div class="modal fade" id="addTripModal" tabindex="-1" aria-labelledby="addTripModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTripModalLabel">Add New Package</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form action="{{ route('trips.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Package Title</label>
+                        <input type="text" name="title" id="title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" name="description" id="description" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="start_date" class="form-label">Start Date</label>
+                        <input type="date" name="start_date" id="start_date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label">End Date</label>
+                        <input type="date" name="end_date" id="end_date" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="experience" class="form-label">Experience</label>
+                        <select name="experience_id" id="experience" class="form-control" required>
+                            <option value="" disabled selected>Select Experience</option>
+                            @foreach ($experiences as $experience)
+                                <option value="{{ $experience->id }}">{{ $experience->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Package Image</label>
+                        <input type="file" name="image" id="image" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Trip</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

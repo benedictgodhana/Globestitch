@@ -277,13 +277,12 @@
         <div class="hero-content">
             <h1>Plan Your Next Adventure</h1>
             <p>Explore our curated list of upcoming trips and embark on unforgettable journeys around the world.</p>
-            <a href="#trips" class="cta-button">View Upcoming Trips</a>
         </div>
     </section>
 
     <!-- Main Content -->
     <section class="trip-container" id="trips">
-        <h2 style="text-align: center; margin-bottom: 2rem;">Upcoming Trips</h2>
+        <h2 style="text-align: center; margin-bottom: 2rem;">Packages</h2>
         <div class="trip-grid">
             @foreach ($trips as $trip)
                 <div class="trip-card">
@@ -328,7 +327,7 @@
 <div class="modal-overlay" x-show="bookingModal" x-transition @click.self="bookingModal = false" style="display: none;">
     <div class="modal">
         <button class="close-button" @click="bookingModal = false">&times;</button>
-        <h3 class="modal-title">Book Trip: <span x-text="currentTripTitle"></span></h3>
+        <h3 class="modal-title">Book a Package: <span x-text="currentTripTitle"></span></h3>
         <p class="text-center" style="margin-top: -1rem; margin-bottom: 1.5rem; color: #6B7280;" x-text="currentTripDate"></p>
         <form action="{{ route('trip.book') }}" method="POST">
     @csrf

@@ -17,6 +17,8 @@ class Trip extends Model
         'start_date',
         'end_date',
         'created_by',
+        'experience_id', // Add experience_id to fillable
+
     ];
 
     /**
@@ -25,5 +27,11 @@ class Trip extends Model
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+
+    public function experience()
+    {
+        return $this->belongsTo(Experience::class);
     }
 }
