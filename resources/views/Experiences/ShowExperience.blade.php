@@ -407,6 +407,15 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .no-trips-message {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff5a5f;
+    margin: 20px 0;
+}
+
     </style>
 </head>
 <body x-data="{
@@ -437,7 +446,6 @@
     <section class="hero">
         <div class="hero-content">
             <h1 class="experience-title">{{ $experience->title }}</h1>
-            <p> {!! nl2br(e($experience->description)) !!}</p>
         </div>
     </section>
 
@@ -471,45 +479,49 @@
 
         <!-- Right Content Area with Trips -->
         <main class="content-area">
-            <div class="trip-grid">
-                <template x-for="(trip, index) in trips" :key="index">
-                    <div class="trip-card" x-show="activeExperience === 'all' || activeExperience === trip.experience" x-transition>
-                        <img :src="trip.image_url" :alt="trip.title">
-                        <div class="trip-content">
-                            <span class="experience-tag" x-text="trip.experience.charAt(0).toUpperCase() + trip.experience.slice(1)"></span>
-                            <h3 class="trip-title" x-text="trip.title"></h3>
-                            <p class="trip-description" x-text="trip.description"></p>
-                            <div class="trip-footer">
-                                <span class="trip-date" x-text="
-                                    new Date(trip.start_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric'}) + ' - ' +
-                                    new Date(trip.end_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})
-                                "></span>
-                                <div class="trip-actions">
-                                    <button class="trip-action"
-                                            @click="
-                                                bookingModal = true;
-                                                currentTripTitle = trip.title;
-                                                currentTripDate = new Date(trip.start_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric'}) + ' - ' + new Date(trip.end_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'});
-                                                currentTripId = trip.id;
-                                            ">
-                                        Book Now
-                                    </button>
-                                    <button class="trip-inquiry"
-                                            @click="
-                                                inquiryModal = true;
-                                                currentTripTitle = trip.title;
-                                                currentTripDate = new Date(trip.start_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric'}) + ' - ' + new Date(trip.end_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'});
-                                                currentTripId = trip.id;
-                                            ">
-                                        Inquire
-                                    </button>
-                                </div>
-                            </div>
+    <template x-if="trips.length === 0">
+        <p class="no-trips-message">No trips available at the moment. Please check back later.</p>
+    </template>
+
+    <div class="trip-grid">
+        <template x-for="(trip, index) in trips" :key="index">
+            <div class="trip-card" x-show="activeExperience === 'all' || activeExperience === trip.experience" x-transition>
+                <img :src="trip.image_url" :alt="trip.title">
+                <div class="trip-content">
+                    <h3 class="trip-title" x-text="trip.title"></h3>
+                    <p class="trip-description" x-text="trip.description"></p>
+                    <div class="trip-footer">
+                        <span class="trip-date" x-text="
+                            new Date(trip.start_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric'}) + ' - ' +
+                            new Date(trip.end_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})
+                        "></span>
+                        <div class="trip-actions">
+                            <button class="trip-action"
+                                    @click="
+                                        bookingModal = true;
+                                        currentTripTitle = trip.title;
+                                        currentTripDate = new Date(trip.start_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric'}) + ' - ' + new Date(trip.end_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'});
+                                        currentTripId = trip.id;
+                                    ">
+                                Book Now
+                            </button>
+                            <button class="trip-inquiry"
+                                    @click="
+                                        inquiryModal = true;
+                                        currentTripTitle = trip.title;
+                                        currentTripDate = new Date(trip.start_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric'}) + ' - ' + new Date(trip.end_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'});
+                                        currentTripId = trip.id;
+                                    ">
+                                Inquire
+                            </button>
                         </div>
                     </div>
-                </template>
+                </div>
             </div>
-        </main>
+        </template>
+    </div>
+</main>
+
     </div>
 
     <!-- Booking Modal -->
