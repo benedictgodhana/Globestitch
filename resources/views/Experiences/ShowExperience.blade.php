@@ -415,7 +415,13 @@
     color: #ff5a5f;
     margin: 20px 0;
 }
-
+.trip-card img {
+    width: 100%; /* Ensures the image takes the full width of its container */
+    height: auto; /* Maintains aspect ratio */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 8px; /* Optional: Adds rounded corners */
+    display: block; /* Removes extra spacing */
+}
     </style>
 </head>
 <body x-data="{
@@ -486,7 +492,7 @@
     <div class="trip-grid">
         <template x-for="(trip, index) in trips" :key="index">
             <div class="trip-card" x-show="activeExperience === 'all' || activeExperience === trip.experience" x-transition>
-                <img :src="trip.image_url" :alt="trip.title">
+                <img :src="trip.image_url" :alt="trip.title" >
                 <div class="trip-content">
                     <h3 class="trip-title" x-text="trip.title"></h3>
                     <p class="trip-description" x-text="trip.description"></p>
@@ -503,7 +509,7 @@
                                         currentTripDate = new Date(trip.start_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric'}) + ' - ' + new Date(trip.end_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'});
                                         currentTripId = trip.id;
                                     ">
-                                Book Now
+                                Book 
                             </button>
                             <button class="trip-inquiry"
                                     @click="

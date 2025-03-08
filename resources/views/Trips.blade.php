@@ -260,6 +260,14 @@
                 gap: 0.75rem;
             }
         }
+        .trip-card img {
+    width: 100%; /* Ensures the image takes the full width of its container */
+    height: auto; /* Maintains aspect ratio */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 8px; /* Optional: Adds rounded corners */
+    display: block; /* Removes extra spacing */
+}
+
     </style>
 </head>
 <body x-data="{
@@ -302,7 +310,7 @@
                     currentTripId = '{{ $trip->id }}';  <!-- Add this line -->
                 "
             >
-                Book Now
+                Book 
             </button>
             <button
                 class="trip-inquiry"
